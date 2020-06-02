@@ -1,1 +1,6 @@
-// Write your code here
+#include "twi.h"
+
+int main()
+{
+    twi_begin();
+}
