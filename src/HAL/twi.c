@@ -1,5 +1,5 @@
-#include "EUL/twi.h"
-#include "internal/twi_internal.h"
+#include "EUL/HAL/twi.h"
+#include "twi_internal.h"
 #include <avr/io.h>
 #include <avr/interrupt.h>
 
@@ -25,7 +25,6 @@ static volatile uint8_t txBufferIndex;
 static uint8_t txBufferLastIndex;
 static uint8_t txSlaveAddress;
 static uint8_t requestAmount;
-
 
 static void twi_sendStartBit();
 static void twi_sendSlaveAddress(uint8_t address, uint8_t rw);

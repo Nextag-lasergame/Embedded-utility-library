@@ -1,4 +1,4 @@
-#include <inttypes.h>
+#include "../../../../.platformio/packages/toolchain-atmelavr/avr/include/inttypes.h"
 
 #ifdef __AVR_ATmega328P__
 
