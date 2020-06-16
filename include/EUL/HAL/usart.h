@@ -8,15 +8,15 @@
 #include <inttypes.h>
 #include <stdbool.h>
 
-#define USART_DATA_BITS_5 5
-#define USART_DATA_BITS_6 6
-#define USART_DATA_BITS_7 7
-#define USART_DATA_BITS_8 8
+#define USART_DATA_BITS_5 0
+#define USART_DATA_BITS_6 1
+#define USART_DATA_BITS_7 2
+#define USART_DATA_BITS_8 3
 #define USART_PARITY_BIT_NONE 0
-#define USART_PARITY_BIT_ODD 1
-#define USART_PARITY_BIT_EVEN 2
-#define USART_STOP_BITS_1 1
-#define USART_STOP_BITS_2 2
+#define USART_PARITY_BIT_ODD 2
+#define USART_PARITY_BIT_EVEN 1
+#define USART_STOP_BITS_1 0
+#define USART_STOP_BITS_2 1
 
 //TODO: Add event based reading of the usart port
 
@@ -24,7 +24,7 @@ typedef struct
 {
     uint8_t databits;
     uint8_t parityBit;
-    uint8_t stoBits;
+    uint8_t stopBits;
 }usartFrameFormat_t;
 
 void usart_setFrameFormat(usartFrameFormat_t frameFormat);

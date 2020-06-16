@@ -41,7 +41,11 @@ static usartFrameFormat_t usartFrameFormat = {
 
 void usart_setFrameFormat(usartFrameFormat_t frameFormat)
 {
-    usartFrameFormat = frameFormat;
+    if(frameFormat.databits >= 0 && frameFormat.databits < 4 && frameFormat.parityBit >= 0 && frameFormat.parityBit < 4
+        && frameFormat.stopBits >= 0 && frameFormat.stopBits < 2)
+    {
+        usartFrameFormat = frameFormat;
+    }
 }
 
 void usart_begin(uint32_t baud)
@@ -56,11 +60,10 @@ void usart_begin(uint32_t baud)
     // Enable receiver and transmitter
     USART_CONTROL_STATUS_REGISTER_B = _BV(USART_RX_ENABLE) | _BV(USART_TX_ENABLE) | _BV(USART_TX_INTERRUPT_ENABLE);
 
-    // Set frame format
-    // TODO:
-    //  - Use usartFrameFormat to configure this
-    //  - Add bits to header
-    USART_CONTROL_STATUS_REGISTER_C = (3<<UCSZ00);
+    //Sets up the frameformat
+   USART_CONTROL_STATUS_REGISTER_C = (usartFrameFormat.databits << USART_DATA_BITS_OFFSET) |
+           (usartFrameFormat.stopBits << USART_STOP_BITS_OFFSET) |
+           (usartFrameFormat.parityBit << USART_PARITY_BITS_OFFSET);
     sei();
 }
 
