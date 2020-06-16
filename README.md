@@ -18,5 +18,4 @@ Utility library to be used in all embedded applications. <br>
 - Timers
 
 ## Running in CLion
-If you want to run this application in CLion, be sure to use MinGW on windows instead of the Microsoft Visual Studio 
-compiler.
+If you want to run this application in CLion, be sure to use MinGW on windows instead of the Microsoft Visual Studio compiler.
