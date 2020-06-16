@@ -12,8 +12,6 @@
 #define F_CPU 1000000L
 #endif
 
-static char tempMessage[USART_BUFFER_SIZE];
-
 static uint8_t txBuffer[USART_BUFFER_SIZE];
 static uint8_t txBufferHead = 0;
 static uint8_t txBufferTail = 0;
@@ -46,7 +44,7 @@ void usart_begin(uint32_t baud)
     uint32_t calculatedBaudRate = F_CPU/16/baud-1;
 
     // Set baud rate
-    USART_BAUD_RATE_REGISTER_H = (uint8_t) (calculatedBaudRate>>8u);
+    USART_BAUD_RATE_REGISTER_H = (uint8_t) (calculatedBaudRate>>8);
     USART_BAUD_RATE_REGISTER_L = (uint8_t) calculatedBaudRate;
 
     // Enable receiver and transmitter with interrupts
@@ -82,6 +80,9 @@ bool usart_print(const char *msg)
 
 bool usart_println(const char *msg)
 {
+    if(strlen(msg) + 1 > USART_BUFFER_SIZE - usart_available())
+        return false;
+
     if(!usart_addToTxBuffer(msg))
         return false;
 

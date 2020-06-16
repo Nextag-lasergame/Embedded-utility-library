@@ -4,27 +4,32 @@
 
 #include <util/delay.h>
 #include <avr/io.h>
+#include "EUL/util/loglevels.h"
+
+//#define LOG_LEVEL LOG_LEVEL_WARN
 
 extern "C" {
-    #include "EUL/HAL/usart.h"
+    #include "EUL/util/logger.h"
+    #include "EUL/util/defaultloggers.h"
 };
 
 int main()
 {
     DDRB = _BV(PORTB5);
-    usart_begin(9600);
+    logger_addLogger(&usartLogger115200);
+    logger_init();
+
+    logger_trace("Hoi");
+    logger_debug("Hoi debug");
+//    _delay_ms(100);
+    logger_info("Hoi info");
+//    _delay_ms(100);
+    logger_warn("Hoi warn");
+//    _delay_ms(100);
+    logger_error("Hoi error");
 
     for(;;)
     {
-        while(usart_available() > 0)
-        {
-            usart_write(usart_read());
-        }
-        //byte == 'a' ? PORTB &= ~(1<<PORTB5) : PORTB |= (1<<PORTB5);
-
-//        usart_println("Hoi") ? PORTB &= ~(1<<PORTB5) : PORTB |= (1<<PORTB5);
-//        usart_write(counter++);
-//        usart_write('\n');
         _delay_ms(100);
     }
 }
