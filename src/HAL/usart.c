@@ -18,8 +18,14 @@ static uint8_t txBuffer[USART_BUFFER_SIZE];
 static uint8_t txBufferHead = 0;
 static uint8_t txBufferTail = 0;
 
-static bool usart_addToBuffer(const char *msg);
+static uint8_t rxBuffer[USART_BUFFER_SIZE];
+static uint8_t rxBufferHead = 0;
+static uint8_t rxBufferTail = 0;
+
+static bool usart_addToTxBuffer(const char *msg);
+static void usart_addToRxBuffer(uint8_t c);
 static void usart_startTransmission();
+static void usart_flush();
 
 /*
  * UBRRn = (F_CPU / (16*BAUD)) - 1
@@ -57,8 +63,9 @@ void usart_begin(uint32_t baud)
     USART_BAUD_RATE_REGISTER_H = (uint8_t) (calculatedBaudRate>>8u);
     USART_BAUD_RATE_REGISTER_L = (uint8_t) calculatedBaudRate;
 
-    // Enable receiver and transmitter
-    USART_CONTROL_STATUS_REGISTER_B = _BV(USART_RX_ENABLE) | _BV(USART_TX_ENABLE) | _BV(USART_TX_INTERRUPT_ENABLE);
+    // Enable receiver and transmitter with interrupts
+    USART_CONTROL_STATUS_REGISTER_B = _BV(USART_RX_ENABLE) | _BV(USART_TX_ENABLE)
+            | _BV(USART_TX_INTERRUPT_ENABLE) | _BV(USART_RX_INTERRUPT_ENABLE);
 
     //Sets up the frameformat
    USART_CONTROL_STATUS_REGISTER_C = (usartFrameFormat.databits << USART_DATA_BITS_OFFSET) |
@@ -67,12 +74,20 @@ void usart_begin(uint32_t baud)
     sei();
 }
 
-//void end();
-//int usart_available();
+void usart_end()
+{
+    USART_CONTROL_STATUS_REGISTER_B = 0;
+    usart_flush();
+}
+
+int usart_available()
+{
+    return rxBufferHead - rxBufferTail;
+}
 
 bool usart_print(const char *msg)
 {
-    if(!usart_addToBuffer(msg))
+    if(!usart_addToTxBuffer(msg))
         return false;
 
     usart_startTransmission();
@@ -81,13 +96,10 @@ bool usart_print(const char *msg)
 
 bool usart_println(const char *msg)
 {
-//    strcpy(tempMessage, msg);
-//    strcat(tempMessage, "\n");
-
-    if(!usart_addToBuffer(tempMessage))
+    if(!usart_addToTxBuffer(msg))
         return false;
 
-    if(!usart_addToBuffer("\n"))
+    if(!usart_addToTxBuffer("\n"))
         return false;
 
     usart_startTransmission();
@@ -103,8 +115,15 @@ void usart_write(uint8_t byte)
     USART_DATA_REGISTER = byte;
 }
 
-//uint8_t usart_read();
-static bool usart_addToBuffer(const char *msg)
+uint8_t usart_read()
+{
+    if(!usart_available())
+        return 0x00;
+
+    return rxBuffer[rxBufferTail++ % USART_BUFFER_SIZE];
+}
+
+static bool usart_addToTxBuffer(const char *msg)
 {
     size_t length = strlen(msg);
 
@@ -114,7 +133,7 @@ static bool usart_addToBuffer(const char *msg)
         txBufferHead = (txBufferHead % USART_BUFFER_SIZE < txBufferTail ? USART_BUFFER_SIZE : 0) + txBufferHead % USART_BUFFER_SIZE;
     }
 
-    if(length > 32 || (txBufferHead + length) - txBufferTail > 32)
+    if(length > 32 || (txBufferHead + length) - txBufferTail > USART_BUFFER_SIZE)
         return false;
 
     for(size_t i = 0; i < length; i++)
@@ -124,9 +143,32 @@ static bool usart_addToBuffer(const char *msg)
     return true;
 }
 
+static void usart_addToRxBuffer(uint8_t c)
+{
+    if(rxBufferHead + 1 > USART_BUFFER_INDEX_MAX_VALUE)
+    {
+        rxBufferTail = rxBufferTail % USART_BUFFER_SIZE;
+        rxBufferHead = (rxBufferHead % USART_BUFFER_SIZE < rxBufferTail ? USART_BUFFER_SIZE : 0) + rxBufferHead % USART_BUFFER_SIZE;
+    }
+
+    if((rxBufferHead + 1) - rxBufferTail > USART_BUFFER_SIZE)
+        return;
+
+    rxBuffer[rxBufferHead++ % USART_BUFFER_SIZE] = c;
+}
+
 static void usart_startTransmission()
 {
     usart_write(txBuffer[txBufferTail++ % USART_BUFFER_SIZE]);
+}
+
+static void usart_flush()
+{
+    uint8_t dummy;
+    while(USART_CONTROL_STATUS_REGISTER_A & _BV(USART_RECEIVE_COMPLETE))
+    {
+        dummy = USART_DATA_REGISTER;
+    }
 }
 
 ISR(USART_TX_vect)
@@ -135,4 +177,11 @@ ISR(USART_TX_vect)
     {
         usart_write(txBuffer[txBufferTail++  % USART_BUFFER_SIZE]);
     }
+}
+
+ISR(USART_RX_vect)
+{
+    while(!(USART_CONTROL_STATUS_REGISTER_A & _BV(USART_RECEIVE_COMPLETE)));
+    uint8_t data = USART_DATA_REGISTER;
+    usart_addToRxBuffer(data);
 }

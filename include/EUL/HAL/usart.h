@@ -29,7 +29,7 @@ typedef struct
 
 void usart_setFrameFormat(usartFrameFormat_t frameFormat);
 void usart_begin(uint32_t baud);
-void end();
+void usart_end();
 int usart_available();
 bool usart_print(const char *msg);
 bool usart_println(const char *msg);
