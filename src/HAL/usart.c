@@ -181,7 +181,6 @@ ISR(USART_TX_vect)
 
 ISR(USART_RX_vect)
 {
-    while(!(USART_CONTROL_STATUS_REGISTER_A & _BV(USART_RECEIVE_COMPLETE)));
     uint8_t data = USART_DATA_REGISTER;
     usart_addToRxBuffer(data);
 }
