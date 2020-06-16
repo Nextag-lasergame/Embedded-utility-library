@@ -27,20 +27,6 @@ static void usart_addToRxBuffer(uint8_t c);
 static void usart_startTransmission();
 static void usart_flush();
 
-/*
- * UBRRn = (F_CPU / (16*BAUD)) - 1
- *
- * 1 start bit
- * 5,6,7 or 8 data bits
- * no, even or odd parity bit
- * 1 or 2 stop bits
- *
- * Data frame -> start bit -> data bits (LSB first) -> parity -> stop bit
- * Data frame can be followed by another, or set to an idle (high) state
- *
- * For RS-485 support read page 187 of the datasheet. There is something there about halfduplex and shizzle
- */
-
 static usartFrameFormat_t usartFrameFormat = {
     USART_DATA_BITS_8, USART_PARITY_BIT_NONE, USART_STOP_BITS_1
 };
