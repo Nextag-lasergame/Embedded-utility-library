@@ -1,18 +1,24 @@
 # Nextag-Lasergame Embedded utility library
-Utility library to be used in all embedded applications. <br>
+Utility library to be used in all embedded applications from Nextag Lasergame
 ### Supported microcontrollers:
 - ATmega328P
 ### Future microcontroller:
 - ATtiny85
 ### Supported features:
-- Nothing here yet :(
+- I2C
+    - Slave with custom address
+    - Single master system
+    - Fully Asynchronous with callbacks
+- USART
+    - 5, 6, 7, or 8 data bits
+    - No, even or odd parity
+    - 1 or 2 stop bits
+    - Variable baud rate 
 ### Future features:
 - Digital IO
 - ADC
-- I2C
 - SPI
 - Logging
-- UART
 - File IO
 - PWM
 - Timers

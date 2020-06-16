@@ -1,5 +1,9 @@
-#ifndef __TWI_H__
-#define __TWI_H__
+//
+// Created by Tim on 16/06/2020.
+//
+
+#ifndef EMBEDDED_UTILITY_LIBRARY_TWI_H
+#define EMBEDDED_UTILITY_LIBRARY_TWI_H
 
 #include <inttypes.h>
 
@@ -14,4 +18,4 @@ extern void twi_onReceive(void (*)(uint8_t*, uint8_t));
 extern void twi_onRequest(void (*)(void));
 extern void twi_requestReply(uint8_t *data, uint8_t amount);
 
-#endif
+#endif //EMBEDDED_UTILITY_LIBRARY_TWI_H
