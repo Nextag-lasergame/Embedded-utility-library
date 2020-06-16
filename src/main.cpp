@@ -1,13 +1,26 @@
 #ifdef EUL_TEST_BUILD
 
+#define F_CPU 16000000L
+
+#include <util/delay.h>
+#include <avr/io.h>
+
 extern "C" {
-    #include "EUL/HAL/twi.h"
+    #include "EUL/HAL/usart.h"
 };
 
 int main()
 {
-    twi_begin();
-    twi_setAddress(127);
+    DDRB = _BV(PORTB5);
+    usart_begin(9600);
+
+    while(true)
+    {
+        usart_println("Hoi") ? PORTB &= ~(1<<PORTB5) : PORTB |= (1<<PORTB5);
+//        usart_write(counter++);
+//        usart_write('\n');
+        _delay_ms(100);
+    }
 }
 
 #endif

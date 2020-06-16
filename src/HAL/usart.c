@@ -1,0 +1,135 @@
+//
+// Created by Tim on 16/06/2020.
+//
+
+#include "EUL/HAL/usart.h"
+#include "usart_internal.h"
+#include <avr/interrupt.h>
+#include <string.h>
+
+#ifndef F_CPU
+#warning F_CPU is not defined, defining F_CPU as 1000000L
+#define F_CPU 1000000L
+#endif
+
+static char tempMessage[USART_BUFFER_SIZE];
+
+static uint8_t txBuffer[USART_BUFFER_SIZE];
+static uint8_t txBufferHead = 0;
+static uint8_t txBufferTail = 0;
+
+static bool usart_addToBuffer(const char *msg);
+static void usart_startTransmission();
+
+/*
+ * UBRRn = (F_CPU / (16*BAUD)) - 1
+ *
+ * 1 start bit
+ * 5,6,7 or 8 data bits
+ * no, even or odd parity bit
+ * 1 or 2 stop bits
+ *
+ * Data frame -> start bit -> data bits (LSB first) -> parity -> stop bit
+ * Data frame can be followed by another, or set to an idle (high) state
+ *
+ * For RS-485 support read page 187 of the datasheet. There is something there about halfduplex and shizzle
+ */
+
+static usartFrameFormat_t usartFrameFormat = {
+    USART_DATA_BITS_8, USART_PARITY_BIT_NONE, USART_STOP_BITS_1
+};
+
+void usart_setFrameFormat(usartFrameFormat_t frameFormat)
+{
+    usartFrameFormat = frameFormat;
+}
+
+void usart_begin(uint32_t baud)
+{
+    cli();
+    uint32_t calculatedBaudRate = F_CPU/16/baud-1;
+
+    // Set baud rate
+    USART_BAUD_RATE_REGISTER_H = (uint8_t) (calculatedBaudRate>>8u);
+    USART_BAUD_RATE_REGISTER_L = (uint8_t) calculatedBaudRate;
+
+    // Enable receiver and transmitter
+    USART_CONTROL_STATUS_REGISTER_B = _BV(USART_RX_ENABLE) | _BV(USART_TX_ENABLE) | _BV(USART_TX_INTERRUPT_ENABLE);
+
+    // Set frame format
+    // TODO:
+    //  - Use usartFrameFormat to configure this
+    //  - Add bits to header
+    USART_CONTROL_STATUS_REGISTER_C = (3<<UCSZ00);
+    sei();
+}
+
+//void end();
+//int usart_available();
+
+bool usart_print(const char *msg)
+{
+    if(!usart_addToBuffer(msg))
+        return false;
+
+    usart_startTransmission();
+    return true;
+}
+
+bool usart_println(const char *msg)
+{
+//    strcpy(tempMessage, msg);
+//    strcat(tempMessage, "\n");
+
+    if(!usart_addToBuffer(tempMessage))
+        return false;
+
+    if(!usart_addToBuffer("\n"))
+        return false;
+
+    usart_startTransmission();
+    return true;
+}
+
+void usart_write(uint8_t byte)
+{
+    // Wait for the transmit buffer to be empty
+    while(!(USART_CONTROL_STATUS_REGISTER_A & _BV(USART_DATA_REGISTER_EMPTY)));
+
+    //Put the data in de buffer and send it
+    USART_DATA_REGISTER = byte;
+}
+
+//uint8_t usart_read();
+static bool usart_addToBuffer(const char *msg)
+{
+    size_t length = strlen(msg);
+
+    if(txBufferHead + length > USART_BUFFER_INDEX_MAX_VALUE)
+    {
+        txBufferTail = txBufferTail % USART_BUFFER_SIZE;
+        txBufferHead = (txBufferHead % USART_BUFFER_SIZE < txBufferTail ? USART_BUFFER_SIZE : 0) + txBufferHead % USART_BUFFER_SIZE;
+    }
+
+    if(length > 32 || (txBufferHead + length) - txBufferTail > 32)
+        return false;
+
+    for(size_t i = 0; i < length; i++)
+    {
+        txBuffer[txBufferHead++ % USART_BUFFER_SIZE] = msg[i];
+    }
+    return true;
+}
+
+static void usart_startTransmission()
+{
+    usart_write(txBuffer[txBufferTail++ % USART_BUFFER_SIZE]);
+}
+
+ISR(USART_TX_vect)
+{
+    if(txBufferTail + 1 <= txBufferHead)
+    {
+        usart_write(txBuffer[txBufferTail++  % USART_BUFFER_SIZE]);
+    }
+}
