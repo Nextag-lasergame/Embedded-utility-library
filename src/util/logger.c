@@ -2,7 +2,6 @@
 #include "EUL/util/logger.h"
 
 #include <string.h>
-#include <avr/io.h>
 
 static void log(const char *levelText, const char *msg);
 
@@ -67,7 +66,8 @@ static void log(const char *levelText, const char *msg)
 {
     size_t sizeLevelText = strlen(levelText);
     size_t sizeMessage = strlen(msg);
-    size_t size = sizeLevelText + sizeMessage - 3;
+    //No idea where this -5 comes from but it works xD
+    size_t size = sizeLevelText + sizeMessage - 5;
     char totalMsg[size];
 
     for(size_t i = 0; i < sizeLevelText; i++)

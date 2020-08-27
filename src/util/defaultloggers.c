@@ -3,6 +3,7 @@
 
 #define F_CPU 16000000L
 #include <util/delay.h>
+#include <avr/io.h>
 
 void usartLogger9600Init();
 void usartLogger115200Init();
@@ -23,5 +24,9 @@ void usartLogger115200Init()
 
 void usartLoggerLog(const char * msg)
 {
-    usart_println(msg);
+    while(!usart_print(msg));
+//    if(!usart_println(msg))
+//    {
+//        PORTB = 0xFF;
+//    }
 }

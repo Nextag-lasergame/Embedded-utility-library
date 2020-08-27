@@ -6,6 +6,7 @@
 #include "usart_internal.h"
 #include <avr/interrupt.h>
 #include <string.h>
+#include <math.h>
 
 #ifndef F_CPU
 #warning F_CPU is not defined, defining F_CPU as 1000000L
@@ -41,7 +42,8 @@ void usart_setFrameFormat(usartFrameFormat_t frameFormat)
 void usart_begin(uint32_t baud)
 {
     cli();
-    uint32_t calculatedBaudRate = F_CPU/16/baud-1;
+    uint32_t calculatedBaudRate = (uint32_t) round(F_CPU/16.0/baud-1);
+//    uint32_t  calculatedBaudRate = 8;
 
     // Set baud rate
     USART_BAUD_RATE_REGISTER_H = (uint8_t) (calculatedBaudRate>>8);
@@ -80,7 +82,7 @@ bool usart_print(const char *msg)
 
 bool usart_println(const char *msg)
 {
-    if(strlen(msg) + 1 > USART_BUFFER_SIZE - usart_available())
+    if(strlen(msg) + 1 > USART_BUFFER_SIZE - (txBufferHead - txBufferTail))
         return false;
 
     if(!usart_addToTxBuffer(msg))
