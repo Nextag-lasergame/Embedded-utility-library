@@ -25,9 +25,9 @@ typedef struct
     uint8_t databits;
     uint8_t parityBit;
     uint8_t stopBits;
-}usartFrameFormat_t;
+} UsartFrameFormat_t;
 
-void usart_setFrameFormat(usartFrameFormat_t frameFormat);
+void usart_setFrameFormat(UsartFrameFormat_t frameFormat);
 void usart_begin(uint32_t baud);
 void usart_end();
 int usart_available();

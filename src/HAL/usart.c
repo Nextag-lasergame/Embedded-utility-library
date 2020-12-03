@@ -26,11 +26,11 @@ static void usart_addToRxBuffer(uint8_t c);
 static void usart_startTransmission();
 static void usart_flush();
 
-static usartFrameFormat_t usartFrameFormat = {
+static UsartFrameFormat_t usartFrameFormat = {
     USART_DATA_BITS_8, USART_PARITY_BIT_NONE, USART_STOP_BITS_1
 };
 
-void usart_setFrameFormat(usartFrameFormat_t frameFormat)
+void usart_setFrameFormat(UsartFrameFormat_t frameFormat)
 {
     if(frameFormat.databits >= 0 && frameFormat.databits < 4 && frameFormat.parityBit >= 0 && frameFormat.parityBit < 4
         && frameFormat.stopBits >= 0 && frameFormat.stopBits < 2)
