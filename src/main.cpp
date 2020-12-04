@@ -14,9 +14,8 @@ extern "C" {
 
 int main()
 {
-    DDRB = _BV(PORTB5);
-    logger_addLogger(&usartLogger9600);
-    logger_init();
+//    logger_addLogger(&usartLogger9600);
+//    logger_init();
 
 //    logger_trace("Hoi");
 //    logger_debug("Hoi debug\n");
@@ -27,20 +26,26 @@ int main()
 //    logger_debug("Test 6\n");
 //    logger_debug("Test 7\n");
 
-//    usart_begin(115200);
-//    if(!usart_print("Test 3\n"))
-//    {
-//        PORTB = 0xFF;
-//    }
-
-    dio_setDirection(pinB5, DIO_DIRECTION_OUTPUT);
+    uint32_t led = DIO_PB5;
+    uint32_t input = DIO_PB0;
+    dio_setDirection(led, true);
+    dio_setDirection(input, false);
 
     for(;;)
     {
-        dio_setOutput(pinB5, DIO_OUTPUT_HIGH);
-        _delay_ms(1000);
-        dio_setOutput(pinB5, DIO_OUTPUT_LOW);
-        _delay_ms(1000);
+//        char msg[32];
+//        itoa(((input & 0xFF000000) >> 24), msg, 16);
+//        Serial.println(msg);
+
+        if(dio_getInput(input))
+        {
+            dio_setOutput(led, true);
+        }
+        else
+        {
+            dio_setOutput(led, false);
+        }
+
     }
 }
 
