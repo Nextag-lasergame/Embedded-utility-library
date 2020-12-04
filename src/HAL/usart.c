@@ -43,7 +43,6 @@ void usart_begin(uint32_t baud)
 {
     cli();
     uint32_t calculatedBaudRate = (uint32_t) round(F_CPU/16.0/baud-1);
-//    uint32_t  calculatedBaudRate = 8;
 
     // Set baud rate
     USART_BAUD_RATE_REGISTER_H = (uint8_t) (calculatedBaudRate>>8);

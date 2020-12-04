@@ -25,8 +25,4 @@ void usartLogger115200Init()
 void usartLoggerLog(const char * msg)
 {
     while(!usart_print(msg));
-//    if(!usart_println(msg))
-//    {
-//        PORTB = 0xFF;
-//    }
 }
