@@ -13,12 +13,14 @@ Utility library to be used in all embedded applications from Nextag Lasergame
     - 5, 6, 7, or 8 data bits
     - No, even or odd parity
     - 1 or 2 stop bits
-    - Variable baud rate 
-### Future features:
+    - Variable baud rate
+- Basic logging functionality
+    - Premade loggers for uart with baud rate of 9600 and 115200
+    - Ability to create your own custom loggers
 - Digital IO
+### Future features:
 - ADC
 - SPI
-- Logging
 - File IO
 - PWM
 - Timers
