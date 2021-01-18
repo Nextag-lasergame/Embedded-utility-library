@@ -2,43 +2,40 @@
 
 #define F_CPU 16000000L
 
-#include <util/delay.h>
+#define assert_true(statement, message) if(!statement) logger_debug(message)
+
 #include <EUL/EUL.h>
+
+void compACallback();
+bool enabled = true;
+uint32_t led = DIO_PB0;
 
 int main()
 {
     logger_addLogger(&usartLogger115200);
     logger_init();
 
-    logger_trace("Hoi");
-    logger_debug("Hoi debug\n");
-    logger_debug("Test 2\n");
-    logger_debug("Test 3\n");
-    logger_debug("Test 4\n");
-    logger_debug("Test 5\n");
-    logger_debug("Test 6\n");
-    logger_debug("Test 7\n");
+    dio_setDirection(led, true);
 
-//    uint32_t led = DIO_PB5;
-//    uint32_t input = DIO_PB0;
-//    dio_setDirection(led, true);
-//    dio_setDirection(input, false);
+    logger_debug("Starting boot procedure\n");
+
+    Timer_t timer = 0;
+    timer_setMode(timer, CTC);
+    assert_true(timer_enableInterruptCompA(timer, true), "Enabling interrupt failed\n");
+    assert_true(timer_setMaxCompA(timer, 210), "Setting max compa a failed\n");
+    assert_true(timer_setCompAVectCallback(timer, compACallback), "Setting callback failed\n");
+    if (!timer_setPrescaler(timer, PRESCALER_1))
+        logger_debug("Timer1 failed\n");
+
     for(;;)
     {
-        logger_debug("Test\n");
-        _delay_ms(1);
-//        Serial.println(msg);
-
-//        if(dio_getInput(input))
-//        {
-//            dio_setOutput(led, true);
-//        }
-//        else
-//        {
-//            dio_setOutput(led, false);
-//        }
-
     }
+}
+
+void compACallback()
+{
+    dio_setOutput(led, enabled);
+    enabled = !enabled;
 }
 
 #endif
