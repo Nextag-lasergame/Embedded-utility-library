@@ -24,5 +24,5 @@ void usartLogger115200Init()
 
 void usartLoggerLog(const char * msg)
 {
-    while(!usart_print(msg));
+    while(!usart_println(msg));
 }
