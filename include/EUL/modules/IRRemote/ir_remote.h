@@ -11,6 +11,11 @@
 #include "EUL/HAL/digital_io.h"
 
 void ir_init(Timer_t timer, uint32_t pin);
+void ir_stop();
 void ir_sendSamsungRaw(uint32_t data);
+
+bool ir_available();
+uint32_t ir_read();
+
 
 #endif //EMBEDDED_UTILITY_LIBRARY_IR_REMOTE_H
