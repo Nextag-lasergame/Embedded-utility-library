@@ -62,11 +62,6 @@ int main()
 #include "EUL/EUL.h"
 #include <util/delay.h>
 
-#define F_CPU 16000000L
-
-#include "EUL/EUL.h"
-#include <util/delay.h>
-
 int main()
 {
     Pin_t led = DIO_PB5;
