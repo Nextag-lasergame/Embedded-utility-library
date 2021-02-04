@@ -5,11 +5,6 @@
 #include <avr/io.h>
 #include "EUL/HAL/digital_io.h"
 
-#define GET_PIN(x) ((x & 0xFF000000) >> 24)
-#define GET_DDR(x) ((x & 0x00FF0000) >> 16)
-#define GET_PORT(x) ((x & 0x0000FF00) >> 8)
-#define GET_BIT(x) (x & 0x000000FF)
-
 void dio_setDirection(Pin_t pin, bool output)
 {
     if(output)

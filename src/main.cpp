@@ -69,7 +69,7 @@ int main()
 
 int main()
 {
-    Pin_t led = {DIO_PB5};
+    Pin_t led = DIO_PB5;
     dio_setDirection(led, true);
 
     for(;;)
