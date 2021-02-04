@@ -50,7 +50,7 @@ static void ir_timerCallbackReceive();
 static void ir_timerCallback();
 
 static Timer_t sTimer;
-static uint32_t sPin;
+static Pin_t sPin;
 static uint8_t sIndex = 0;
 static uint16_t sCount = 0;
 static uint8_t *sSendDataBuffer = 0x00;
@@ -62,7 +62,7 @@ static float sDataReceiveStepIntervalMs = 0;
 static bool lastState = true;
 static bool sReceiving = false;
 
-void ir_init(Timer_t timer, uint32_t pin)
+void ir_init(Timer_t timer, Pin_t pin)
 {
     sTimer = timer;
     sPin = pin;

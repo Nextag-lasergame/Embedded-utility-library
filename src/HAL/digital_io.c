@@ -10,24 +10,24 @@
 #define GET_PORT(x) ((x & 0x0000FF00) >> 8)
 #define GET_BIT(x) (x & 0x000000FF)
 
-void dio_setDirection(uint32_t pin, bool output)
+void dio_setDirection(Pin_t pin, bool output)
 {
     if(output)
-        _SFR_IO8(GET_DDR(pin)) |= _BV(GET_BIT(pin));
+        _SFR_IO8(pin.ddrRegister) |= _BV(pin.bit);
     else
-        _SFR_IO8(GET_DDR(pin)) &= ~_BV(GET_BIT(pin));
+        _SFR_IO8(pin.ddrRegister) &= ~_BV(pin.bit);
 }
 
-void dio_setOutput(uint32_t pin, bool output)
+void dio_setOutput(Pin_t pin, bool output)
 {
     if(output)
-        _SFR_IO8(GET_PORT(pin)) |= _BV(GET_BIT(pin));
+        _SFR_IO8(pin.portRegister) |= _BV(pin.bit);
     else
-        _SFR_IO8(GET_PORT(pin)) &= ~_BV(GET_BIT(pin));
+        _SFR_IO8(pin.portRegister) &= ~_BV(pin.bit);
 }
 
-bool dio_getInput(uint32_t pin)
+bool dio_getInput(Pin_t pin)
 {
-    return (_SFR_IO8(GET_PIN(pin)) & _BV(GET_BIT(pin)));
+    return (_SFR_IO8(pin.pinRegister) & _BV(pin.bit));
 }
 
