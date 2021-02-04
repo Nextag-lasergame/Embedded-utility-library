@@ -10,7 +10,7 @@
 #include "EUL/HAL/timer.h"
 #include "EUL/HAL/digital_io.h"
 
-void ir_init(Timer_t timer, uint32_t pin);
+void ir_init(Timer_t timer, Pin_t pin);
 void ir_stop();
 void ir_sendSamsungRaw(uint32_t data);
 

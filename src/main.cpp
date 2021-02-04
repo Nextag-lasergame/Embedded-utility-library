@@ -64,13 +64,13 @@ int main()
 
 int main()
 {
-    usart_begin(115200);
-    usart_println("Hello world!");
+    Pin_t led = DIO_PB5;
+    dio_setDirection(led, true);
 
     for(;;)
     {
+        dio_setOutput(led, !dio_getInput(led));
         _delay_ms(1000);
-        usart_println("BeepBoop");
     }
 }
 

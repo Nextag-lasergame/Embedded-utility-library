@@ -5,11 +5,12 @@
 
 int main()
 {
-    dio_setDirection(DIO_PB5, true);
+    Pin_t led = DIO_PB5;
+    dio_setDirection(led, true);
 
     for(;;)
     {
-        dio_setOutput(DIO_PB5, !dio_getInput(DIO_PB5));
+        dio_setOutput(led, !dio_getInput(led));
         _delay_ms(1000);
     }
 }
