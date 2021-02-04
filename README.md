@@ -1,9 +1,11 @@
+# This library is still WIP
+
 # Nextag-Lasergame Embedded utility library
 Utility library to be used in all embedded applications from Nextag Lasergame
 ### Supported microcontrollers:
 - ATmega328P
 ### Future microcontroller:
-- ATtiny85
+- ATtiny45
 ### Supported features:
 - I2C
     - Slave with custom address
@@ -18,6 +20,7 @@ Utility library to be used in all embedded applications from Nextag Lasergame
     - Premade loggers for uart with baud rate of 9600 and 115200
     - Ability to create your own custom loggers
 - Digital IO
+- 8 Bit timer in CTC mode
 ### Future features:
 - ADC
 - SPI
