@@ -1,17 +1,16 @@
-#ifdef EUL_TEST_BUILD
+#ifndef EUL_TEST_BUILD
 
-#define F_CPU 16000000L
+//#define F_CPU 16000000L
+
+#define print(x) while(!usart_println(x))
 
 #define assert_true(statement, message) if(!statement) logger_debug(message)
-
-#include "avr/io.h"
 
 #include <EUL/EUL.h>
 extern "C" {
 #include <EUL/modules/IRRemote/ir_remote.h>
 }
 #include <util/delay.h>
-#include <stdio.h>
 #include <inttypes.h>
 
 uint32_t input = DIO_PB1;
@@ -23,7 +22,7 @@ int main()
 //    logger_init();
     usart_begin(115200);
 //
-    while(!usart_println("Starting boot procedure"));
+    print("Starting boot procedure");
     dio_setDirection(led, true);
     dio_setDirection(input, true);
     while(!usart_println("Output led direction set"));
@@ -57,3 +56,21 @@ int main()
     }
 }
 #endif
+
+#define F_CPU 16000000L
+
+#include "EUL/EUL.h"
+#include <util/delay.h>
+
+int main()
+{
+    usart_begin(115200);
+    usart_println("Hello world!");
+
+    for(;;)
+    {
+        _delay_ms(1000);
+        usart_println("BeepBoop");
+    }
+}
+

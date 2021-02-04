@@ -7,7 +7,7 @@
 
 #ifdef __AVR_ATmega328P__
 
-#include "timer.c"
+#include "timer_internal.h"
 #define TIMER_COUNT 3
 
 static void set8BitMode(TimerData_t *timer, TimerMode_t mode);
