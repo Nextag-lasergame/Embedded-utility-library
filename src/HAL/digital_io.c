@@ -38,4 +38,3 @@ bool dio_getInput(Pin_t pin)
 {
     return (_SFR_IO8(pin.pinRegister) & _BV(pin.bit));
 }
-

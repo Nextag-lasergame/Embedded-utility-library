@@ -15,6 +15,8 @@
  * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+#ifndef TINY_BUILD
+
 #include "EUL/HAL/usart.h"
 #include "usart_internal.h"
 #include <avr/interrupt.h>
@@ -185,3 +187,5 @@ ISR(USART_RX_vect)
     uint8_t data = USART_DATA_REGISTER;
     usart_addToRxBuffer(data);
 }
+
+#endif
