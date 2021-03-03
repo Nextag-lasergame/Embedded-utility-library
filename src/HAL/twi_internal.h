@@ -17,8 +17,6 @@
 
 #include <inttypes.h>
 
-#ifdef __AVR_ATmega328P__
-
 #ifndef TWI_FREQ
 #define TWI_FREQ 100000L
 #endif
@@ -114,5 +112,3 @@
 #define TWI_MRX 2
 #define TWI_STX 3
 #define TWI_SRX 4
-
-#endif

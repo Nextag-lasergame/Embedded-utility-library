@@ -25,19 +25,23 @@ typedef struct
 {
     union
     {
-        uint32_t value;
+        uint64_t value;
         struct
         {
-            uint8_t bit;
-            uint8_t portRegister;
-            uint8_t ddrRegister;
-            uint8_t pinRegister;
+            uint16_t bit;
+            uint16_t portRegister;
+            uint16_t ddrRegister;
+            uint16_t pinRegister;
         };
     };
 } Pin_t;
 
 #ifdef __AVR_ATmega328P__
-#include "digital_io/atmega328p.h"
+#include "digital_io/pins_atmega328p.h"
+#endif
+
+#ifdef __AVR_ATmega2560__
+#include "digital_io/pins_atmega2560.h"
 #endif
 
 extern void dio_setDirection(Pin_t pin, bool output);

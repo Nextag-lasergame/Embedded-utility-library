@@ -21,8 +21,6 @@
 
 #define print(x) while(!usart_println(x))
 
-#define assert_true(statement, message) if(!statement) logger_debug(message)
-
 #include <EUL/EUL.h>
 extern "C" {
 #include <EUL/modules/IRRemote/ir_remote.h>
@@ -76,8 +74,24 @@ int main()
 
 #ifdef EUL_TEST_BUILD
 
+#include "EUL/EUL.h"
+#include "avr/delay.h"
+
 int main()
 {
+    Pin_t led = DIO_PB7;
+    dio_setDirection(led, true);
+    usart_begin(9600);
+    usart_println("Test message");
+
+    for(;;)
+    {
+        dio_setOutput(led, true);
+        _delay_ms(1000);
+        dio_setOutput(led, false);
+        _delay_ms(1000);
+    }
+
     return 0;
 }
 

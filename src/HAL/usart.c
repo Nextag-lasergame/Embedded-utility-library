@@ -174,7 +174,7 @@ static void usart_flush()
     }
 }
 
-ISR(USART_TX_vect)
+ISR(USART0_TX_vect)
 {
     if(txBufferTail + 1 <= txBufferHead)
     {
@@ -182,7 +182,7 @@ ISR(USART_TX_vect)
     }
 }
 
-ISR(USART_RX_vect)
+ISR(USART0_RX_vect)
 {
     uint8_t data = USART_DATA_REGISTER;
     usart_addToRxBuffer(data);
