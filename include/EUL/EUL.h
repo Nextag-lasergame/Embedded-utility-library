@@ -9,6 +9,8 @@
 extern "C" {
 #endif
 
+#include "EUL/platform/platform.h"
+
 #include "EUL/HAL/digital_io.h"
 #include "EUL/HAL/twi.h"
 #include "EUL/HAL/usart.h"

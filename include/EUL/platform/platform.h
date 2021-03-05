@@ -10,11 +10,11 @@ extern "C" {
 #endif
 
 #ifdef __AVR_ATmega328P__
-#include "atmega//atmega328p.h"
+#include "atmega/atmega328p.h"
 #endif
 
 #ifdef __AVR_ATmega2560__
-#include "atmega//atmega2560.h"
+#include "atmega/atmega2560.h"
 #endif
 
 #ifdef __cplusplus

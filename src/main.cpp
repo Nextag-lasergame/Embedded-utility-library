@@ -74,6 +74,8 @@ int main()
 
 #ifdef EUL_TEST_BUILD
 
+#define F_CPU 16000000L
+
 #include "EUL/EUL.h"
 #include "avr/delay.h"
 
@@ -81,14 +83,16 @@ int main()
 {
     Pin_t led = DIO_PB7;
     dio_setDirection(led, true);
-    usart_begin(9600);
-    usart_println("Test message");
+    usart_begin(usart0, 9600);
+//    usart_write(usart0, 'c');
+    usart_println(usart0, "Test message");
+//    UDR0 = 'c';
 
     for(;;)
     {
-        dio_setOutput(led, true);
-        _delay_ms(1000);
-        dio_setOutput(led, false);
+//        dio_setOutput(led, true);
+//        _delay_ms(1000);
+//        dio_setOutput(led, false);
         _delay_ms(1000);
     }
 

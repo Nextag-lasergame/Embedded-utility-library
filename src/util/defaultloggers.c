@@ -31,15 +31,15 @@ Logger_t usartLogger115200 = { usartLogger115200Init, usartLoggerLog };
 
 void usartLogger9600Init()
 {
-    usart_begin(9600);
+    usart_begin(usart0, 9600);
 }
 
 void usartLogger115200Init()
 {
-    usart_begin(115200);
+    usart_begin(usart0, 115200);
 }
 
 void usartLoggerLog(const char * msg)
 {
-    while(!usart_println(msg));
+    while(!usart_println(usart0, msg));
 }
