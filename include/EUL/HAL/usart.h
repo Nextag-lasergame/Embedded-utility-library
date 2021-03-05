@@ -57,11 +57,10 @@ struct Usart
     volatile uint8_t *registerControlC;
     volatile uint8_t *registerData;
     UsartFrameFormat_t frameFormat;
-    uint8_t *txBuffer;
+
     uint8_t txBufferHead;
     uint8_t txBufferTail;
 
-    uint8_t rxBuffer[USART_BUFFER_SIZE];
     uint8_t rxBufferHead;
     uint8_t rxBufferTail;
 };

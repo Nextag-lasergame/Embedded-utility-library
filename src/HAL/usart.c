@@ -39,7 +39,8 @@
 
 #define USART_BUFFER_INDEX_MAX_VALUE 255
 
-static uint8_t txBuffer0[USART_BUFFER_SIZE];
+static uint8_t txBuffer[USART_BUFFER_SIZE];
+static uint8_t rxBuffer[USART_BUFFER_SIZE];
 
 static bool usart_addToTxBuffer(struct Usart usart, const char *msg);
 static void usart_addToRxBuffer(struct Usart usart, uint8_t c);
@@ -128,15 +129,11 @@ uint8_t usart_read(struct Usart usart)
     if(!usart_available(usart))
         return 0x00;
 
-    return usart.rxBuffer[usart.rxBufferTail++ % USART_BUFFER_SIZE];
+    return rxBuffer[usart.rxBufferTail++ % USART_BUFFER_SIZE];
 }
 
 static bool usart_addToTxBuffer(struct Usart usart, const char *msg)
 {
-    Pin_t led = DIO_PB7;
-    if(&usart.txBuffer != &usart0.txBuffer)
-        dio_setOutput(led, true);
-
     size_t length = strlen(msg);
 
     if(usart.txBufferHead + length > USART_BUFFER_INDEX_MAX_VALUE)
@@ -150,7 +147,7 @@ static bool usart_addToTxBuffer(struct Usart usart, const char *msg)
 
     for(size_t i = 0; i < length; i++)
     {
-        usart.txBuffer[usart.txBufferHead++ % USART_BUFFER_SIZE] = msg[i];
+        txBuffer[usart.txBufferHead++ % USART_BUFFER_SIZE] = msg[i];
     }
     return true;
 }
@@ -166,12 +163,12 @@ static void usart_addToRxBuffer(struct Usart usart, uint8_t c)
     if((usart.rxBufferHead + 1) - usart.rxBufferTail > USART_BUFFER_SIZE)
         return;
 
-    usart.rxBuffer[usart.rxBufferHead++ % USART_BUFFER_SIZE] = c;
+    rxBuffer[usart.rxBufferHead++ % USART_BUFFER_SIZE] = c;
 }
 
 static void usart_startTransmission(struct Usart usart)
 {
-    usart_write(usart, usart.txBuffer[usart.txBufferTail++ % USART_BUFFER_SIZE]);
+    usart_write(usart, txBuffer[usart.txBufferTail++ % USART_BUFFER_SIZE]);
 }
 
 static void usart_flush(struct Usart usart)
@@ -193,7 +190,8 @@ struct Usart usart0 = {
         {
                 USART_DATA_BITS_8, USART_PARITY_BIT_NONE, USART_STOP_BITS_1
         },
-        txBuffer0,
+        0,
+        0,
         0,
         0
 };
@@ -203,7 +201,7 @@ ISR(USART_TRANSMIT_VECTOR)
     PORTB = 0xff;
     if(usart0.txBufferTail + 1 <= usart0.txBufferHead)
     {
-        usart_write(usart0, usart0.txBuffer[usart0.txBufferTail++  % USART_BUFFER_SIZE]);
+        usart_write(usart0, txBuffer[usart0.txBufferTail++  % USART_BUFFER_SIZE]);
     }
 }
 
