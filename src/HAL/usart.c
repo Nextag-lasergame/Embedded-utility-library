@@ -16,7 +16,6 @@
  */
 
 #include "EUL/HAL/usart.h"
-#include "usart_internal.h"
 #include <avr/interrupt.h>
 #include <string.h>
 #include <math.h>
