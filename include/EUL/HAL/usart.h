@@ -63,25 +63,28 @@ struct Usart
 
     uint8_t rxBufferHead;
     uint8_t rxBufferTail;
+
+    uint8_t txBuffer[USART_BUFFER_SIZE];
+    uint8_t rxBuffer[USART_BUFFER_SIZE];
 };
 
-void usart_setFrameFormat(struct Usart usart, UsartFrameFormat_t frameFormat);
-void usart_begin(struct Usart usart, uint32_t baud);
-void usart_end(struct Usart usart);
-int usart_available(struct Usart usart);
-bool usart_print(struct Usart usart, const char *msg);
-bool usart_println(struct Usart usart, const char *msg);
-void usart_write(struct Usart usart, uint8_t byte);
-uint8_t usart_read(struct Usart usart);
+void usart_setFrameFormat(struct Usart *usart, UsartFrameFormat_t frameFormat);
+void usart_begin(struct Usart *usart, uint32_t baud);
+void usart_end(struct Usart *usart);
+int usart_available(struct Usart *usart);
+bool usart_print(struct Usart *usart, const char *msg);
+bool usart_println(struct Usart *usart, const char *msg);
+void usart_write(struct Usart *usart, uint8_t byte);
+uint8_t usart_read(struct Usart *usart);
 
-extern struct Usart usart0;
+extern struct Usart *usart0;
 
 #if USART_COUNT > 1
-extern struct Usart usart1;
+extern struct Usart *usart1;
 #if USART_COUNT > 2
-extern struct Usart usart2;
+extern struct Usart *usart2;
 #if USART_COUNT > 3
-extern struct Usart usart3;
+extern struct Usart *usart3;
 #endif // USART_COUNT > 3
 #endif // USART_COUNT > 2
 #endif // USART_COUNT > 1

@@ -83,9 +83,9 @@ int main()
 {
     Pin_t led = DIO_PB7;
     dio_setDirection(led, true);
-    usart_begin(usart0, 9600);
+    usart_begin(usart3, 9600);
 //    usart_write(usart0, 'c');
-    usart_println(usart0, "Test message");
+    usart_println(usart3, "Test message");
 //    UDR0 = 'c';
 
     for(;;)
