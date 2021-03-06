@@ -20,6 +20,14 @@
 
 #include <inttypes.h>
 #include <stdbool.h>
+#include "EUL/platform/platform.h"
+
+#if defined(USART_COUNT) && USART_COUNT > 0
+
+#ifndef USART_BUFFER_SIZE
+#define USART_BUFFER_SIZE 32
+#endif
+
 
 #define USART_DATA_BITS_5 0
 #define USART_DATA_BITS_6 1
@@ -40,13 +48,47 @@ typedef struct
     uint8_t stopBits;
 } UsartFrameFormat_t;
 
-void usart_setFrameFormat(UsartFrameFormat_t frameFormat);
-void usart_begin(uint32_t baud);
-void usart_end();
-int usart_available();
-bool usart_print(const char *msg);
-bool usart_println(const char *msg);
-void usart_write(uint8_t byte);
-uint8_t usart_read();
+struct Usart
+{
+    volatile uint8_t *registerBaudRateLow;
+    volatile uint8_t *registerBaudRateHigh;
+    volatile uint8_t *registerControlA;
+    volatile uint8_t *registerControlB;
+    volatile uint8_t *registerControlC;
+    volatile uint8_t *registerData;
+    UsartFrameFormat_t frameFormat;
+
+    uint8_t txBufferHead;
+    uint8_t txBufferTail;
+
+    uint8_t rxBufferHead;
+    uint8_t rxBufferTail;
+
+    uint8_t txBuffer[USART_BUFFER_SIZE];
+    uint8_t rxBuffer[USART_BUFFER_SIZE];
+};
+
+void usart_setFrameFormat(struct Usart *usart, UsartFrameFormat_t frameFormat);
+void usart_begin(struct Usart *usart, uint32_t baud);
+void usart_end(struct Usart *usart);
+int usart_available(struct Usart *usart);
+bool usart_print(struct Usart *usart, const char *msg);
+bool usart_println(struct Usart *usart, const char *msg);
+void usart_write(struct Usart *usart, uint8_t byte);
+uint8_t usart_read(struct Usart *usart);
+
+extern struct Usart *usart0;
+
+#if USART_COUNT > 1
+extern struct Usart *usart1;
+#if USART_COUNT > 2
+extern struct Usart *usart2;
+#if USART_COUNT > 3
+extern struct Usart *usart3;
+#endif // USART_COUNT > 3
+#endif // USART_COUNT > 2
+#endif // USART_COUNT > 1
+
+#endif // defined(USART_COUNT) && USART_COUNT > 0
 
 #endif //EMBEDDED_UTILITY_LIBRARY_USART_H
