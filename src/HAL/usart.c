@@ -138,7 +138,7 @@ static bool usart_addToTxBuffer(struct Usart *usart, const char *msg)
         usart->txBufferHead = (usart->txBufferHead % USART_BUFFER_SIZE < usart->txBufferTail ? USART_BUFFER_SIZE : 0) + usart->txBufferHead % USART_BUFFER_SIZE;
     }
 
-    if(length > 32 || (usart->txBufferHead + length) - usart->txBufferTail > USART_BUFFER_SIZE)
+    if(length > USART_BUFFER_SIZE || (usart->txBufferHead + length) - usart->txBufferTail > USART_BUFFER_SIZE)
         return false;
 
     for(size_t i = 0; i < length; i++)
