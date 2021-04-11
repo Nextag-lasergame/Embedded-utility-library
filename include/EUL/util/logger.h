@@ -15,6 +15,10 @@
 #define LOG_LEVEL_TEXT_WARN  "[WARN]  "
 #define LOG_LEVEL_TEXT_ERROR "[ERROR] "
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #ifndef LOG_LEVEL
 #warning LOG_LEVEL not defined, defaulting it to LOG_LEVEL_DEBUG. Please define the LOG_LEVEL as an global define using -DLOG_LEVEL={level here}. Possible log levels: LOG_LEVEL_TRACE, LOG_LEVEL_DEBUG, LOG_LEVEL_INFO, LOG_LEVEL_WARN, LOG_LEVEL_ERROR and LOG_LEVEL_DISABLED
 #define LOG_LEVEL LOG_LEVEL_DEBUG
@@ -70,6 +74,10 @@ void logger_error(const char *msg);
 #define logger_error(message)
 #endif
 
+#endif
+
+#ifdef __cplusplus
+}
 #endif
 
 #endif //EMBEDDED_UTILITY_LIBRARY_LOGGER_H

@@ -18,6 +18,10 @@
 #ifndef EMBEDDED_UTILITY_LIBRARY_DIGITAL_IO_H
 #define EMBEDDED_UTILITY_LIBRARY_DIGITAL_IO_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <inttypes.h>
 #include "stdbool.h"
 
@@ -37,7 +41,9 @@ typedef struct
 } Pin_t;
 
 #ifdef __AVR_ATmega328P__
+
 #include "digital_io/pins_atmega328p.h"
+
 #endif
 
 #ifdef __AVR_ATmega2560__
@@ -47,5 +53,9 @@ typedef struct
 extern void dio_setDirection(Pin_t pin, bool output);
 extern void dio_setOutput(Pin_t pin, bool high);
 extern bool dio_getInput(Pin_t pin);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif //EMBEDDED_UTILITY_LIBRARY_DIGITAL_IO_H

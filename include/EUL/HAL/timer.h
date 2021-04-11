@@ -18,17 +18,22 @@
 #ifndef EMBEDDED_UTILITY_LIBRARY_TIMER_H
 #define EMBEDDED_UTILITY_LIBRARY_TIMER_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <inttypes.h>
 #include "stdbool.h"
 
 typedef uint8_t Timer_t;
 
-typedef enum {
+typedef enum
+{
     NORMAL,
     FAST_PWM,
     PHASE_CORRECT_PWM,
     CTC
-}TimerMode_t;
+} TimerMode_t;
 
 typedef enum
 {
@@ -52,4 +57,9 @@ bool timer_enableInterruptOverflow(Timer_t timer, bool enabled);
 bool timer_setCompAVectCallback(Timer_t timer, void (*callback));
 bool timer_setCompBVectCallback(Timer_t timer, void (*callback));
 bool timer_setOverflowVectCallback(Timer_t timer, void (*callback));
+
+#ifdef __cplusplus
+}
+#endif
+
 #endif //EMBEDDED_UTILITY_LIBRARY_TIMER_H

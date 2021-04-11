@@ -18,6 +18,10 @@
 #ifndef EMBEDDED_UTILITY_LIBRARY_USART_H
 #define EMBEDDED_UTILITY_LIBRARY_USART_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <inttypes.h>
 #include <stdbool.h>
 #include "EUL/platform/platform.h"
@@ -90,5 +94,9 @@ extern struct Usart *usart3;
 #endif // USART_COUNT > 1
 
 #endif // defined(USART_COUNT) && USART_COUNT > 0
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif //EMBEDDED_UTILITY_LIBRARY_USART_H
