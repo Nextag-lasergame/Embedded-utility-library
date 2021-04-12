@@ -30,8 +30,8 @@ extern "C" {
 
 #ifndef USART_BUFFER_SIZE
 #define USART_BUFFER_SIZE 32
+#warning USART_BUFFER_SIZE not defined, defining it to be 32
 #endif
-
 
 #define USART_DATA_BITS_5 0
 #define USART_DATA_BITS_6 1
@@ -62,11 +62,11 @@ struct Usart
     volatile uint8_t *registerData;
     UsartFrameFormat_t frameFormat;
 
-    uint8_t txBufferHead;
-    uint8_t txBufferTail;
+    uint16_t txBufferHead;
+    uint16_t txBufferTail;
 
-    uint8_t rxBufferHead;
-    uint8_t rxBufferTail;
+    uint16_t rxBufferHead;
+    uint16_t rxBufferTail;
 
     uint8_t txBuffer[USART_BUFFER_SIZE];
     uint8_t rxBuffer[USART_BUFFER_SIZE];

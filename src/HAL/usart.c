@@ -36,7 +36,7 @@
 #define F_CPU 1000000L
 #endif
 
-#define USART_BUFFER_INDEX_MAX_VALUE 255
+#define USART_BUFFER_INDEX_MAX_VALUE 65535
 
 static bool usart_addToTxBuffer(struct Usart *usart, const char *msg);
 static void usart_addToRxBuffer(struct Usart *usart, uint8_t c);

@@ -85,14 +85,18 @@ int main()
     dio_setDirection(led, true);
     usart_begin(usart0, 9600);
 //    usart_write(usart0, 'c');
-    usart_println(usart0, "Test message");
+    for(int i = 0; i < 100; i++)
+    {
+        while (!usart_println(usart0, "1 2 3 4 5 6 7 8 9 10"));
+        _delay_ms(100);
+    }
 //    UDR0 = 'c';
 
     for(;;)
     {
-//        dio_setOutput(led, true);
-//        _delay_ms(1000);
-//        dio_setOutput(led, false);
+        dio_setOutput(led, true);
+        _delay_ms(1000);
+        dio_setOutput(led, false);
         _delay_ms(1000);
     }
 
