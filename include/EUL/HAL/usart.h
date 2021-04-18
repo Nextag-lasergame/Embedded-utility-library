@@ -26,6 +26,8 @@ extern "C" {
 #include <stdbool.h>
 #include "EUL/platform/platform.h"
 
+#include "EUL/HAL/digital_io.h"
+
 #if defined(USART_COUNT) && USART_COUNT > 0
 
 #ifndef USART_BUFFER_SIZE
@@ -68,8 +70,11 @@ struct Usart
     uint16_t rxBufferHead;
     uint16_t rxBufferTail;
 
+    bool rs485FlowControlEnabled;
+
     uint8_t txBuffer[USART_BUFFER_SIZE];
     uint8_t rxBuffer[USART_BUFFER_SIZE];
+    Pin_t rs485FlowControlPin;
 };
 
 void usart_setFrameFormat(struct Usart *usart, UsartFrameFormat_t frameFormat);
@@ -80,6 +85,8 @@ bool usart_print(struct Usart *usart, const char *msg);
 bool usart_println(struct Usart *usart, const char *msg);
 void usart_write(struct Usart *usart, uint8_t byte);
 uint8_t usart_read(struct Usart *usart);
+void usart_enableRS485FlowControl(struct Usart *usart, Pin_t pin);
+void usart_disableRs485FlowControl(struct Usart *usart);
 
 extern struct Usart *usart0;
 

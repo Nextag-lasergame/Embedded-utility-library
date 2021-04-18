@@ -116,6 +116,9 @@ void usart_write(struct Usart *usart, uint8_t byte)
     // Wait for the transmit buffer to be empty
     while(!(*usart->registerControlA & _BV(UDRE0)));
 
+    if(usart->rs485FlowControlEnabled)
+        dio_setOutput(usart->rs485FlowControlPin, true);
+
     //Put the data in de buffer and send it
     *usart->registerData = byte;
 }
@@ -176,6 +179,18 @@ static void usart_flush(struct Usart *usart)
     }
 }
 
+void usart_enableRS485FlowControl(struct Usart *usart, Pin_t pin)
+{
+    usart->rs485FlowControlEnabled = true;
+    usart->rs485FlowControlPin = pin;
+    dio_setDirection(pin, true);
+}
+
+void usart_disableRs485FlowControl(struct Usart *usart)
+{
+    usart->rs485FlowControlEnabled = false;
+}
+
 static struct Usart usart0NoPointer = {
         &UBRR0L,
         &UBRR0H,
@@ -189,7 +204,8 @@ static struct Usart usart0NoPointer = {
         0,
         0,
         0,
-        0
+        0,
+        false
 };
 
 struct Usart *usart0 = &usart0NoPointer;
@@ -198,7 +214,14 @@ ISR(USART_TRANSMIT_VECTOR)
 {
     if(usart0->txBufferTail + 1 <= usart0->txBufferHead)
     {
+        if (usart0->rs485FlowControlEnabled)
+            dio_setOutput(usart0->rs485FlowControlPin, true);
         usart_write(usart0, usart0->txBuffer[usart0->txBufferTail++  % USART_BUFFER_SIZE]);
+    }
+    else
+    {
+        if (usart0->rs485FlowControlEnabled)
+            dio_setOutput(usart0->rs485FlowControlPin, false);
     }
 }
 
@@ -223,7 +246,10 @@ static struct Usart usart1NoPointer = {
         0,
         0,
         0,
-        0
+        0,
+        false
+
+
 };
 
 struct Usart *usart1 = &usart1NoPointer;
@@ -257,7 +283,8 @@ static struct Usart usart2NoPointer = {
         0,
         0,
         0,
-        0
+        0,
+        false
 };
 
 struct Usart *usart2 = &usart2NoPointer;
@@ -291,7 +318,8 @@ static struct Usart usart3NoPointer = {
         0,
         0,
         0,
-        0
+        0,
+        false
 };
 
 struct Usart *usart3 = &usart3NoPointer;
