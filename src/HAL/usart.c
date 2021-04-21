@@ -42,6 +42,7 @@ static bool usart_addToTxBuffer(struct Usart *usart, const char *msg);
 static void usart_addToRxBuffer(struct Usart *usart, uint8_t c);
 static void usart_startTransmission(struct Usart *usart);
 static void usart_flush(struct Usart *usart);
+static void usart_writeFromInterrupt(struct Usart *usart);
 
 void usart_setFrameFormat(struct Usart *usart, UsartFrameFormat_t frameFormat)
 {
@@ -116,6 +117,9 @@ void usart_write(struct Usart *usart, uint8_t byte)
     // Wait for the transmit buffer to be empty
     while(!(*usart->registerControlA & _BV(UDRE0)));
 
+    if(usart->rs485FlowControlEnabled)
+        dio_setOutput(usart->rs485FlowControlPin, true);
+
     //Put the data in de buffer and send it
     *usart->registerData = byte;
 }
@@ -176,6 +180,33 @@ static void usart_flush(struct Usart *usart)
     }
 }
 
+void usart_enableRS485FlowControl(struct Usart *usart, Pin_t pin)
+{
+    usart->rs485FlowControlEnabled = true;
+    usart->rs485FlowControlPin = pin;
+    dio_setDirection(pin, true);
+}
+
+void usart_disableRs485FlowControl(struct Usart *usart)
+{
+    usart->rs485FlowControlEnabled = false;
+}
+
+void usart_writeFromInterrupt(struct Usart *usart)
+{
+    if(usart->txBufferTail + 1 <= usart->txBufferHead)
+    {
+        if (usart->rs485FlowControlEnabled)
+            dio_setOutput(usart->rs485FlowControlPin, true);
+        usart_write(usart, usart->txBuffer[usart->txBufferTail++  % USART_BUFFER_SIZE]);
+    }
+    else
+    {
+        if (usart->rs485FlowControlEnabled)
+            dio_setOutput(usart->rs485FlowControlPin, false);
+    }
+};
+
 static struct Usart usart0NoPointer = {
         &UBRR0L,
         &UBRR0H,
@@ -189,17 +220,15 @@ static struct Usart usart0NoPointer = {
         0,
         0,
         0,
-        0
+        0,
+        false
 };
 
 struct Usart *usart0 = &usart0NoPointer;
 
 ISR(USART_TRANSMIT_VECTOR)
 {
-    if(usart0->txBufferTail + 1 <= usart0->txBufferHead)
-    {
-        usart_write(usart0, usart0->txBuffer[usart0->txBufferTail++  % USART_BUFFER_SIZE]);
-    }
+    usart_writeFromInterrupt(usart0);
 }
 
 ISR(USART_RECEIVE_VECTOR)
@@ -223,17 +252,17 @@ static struct Usart usart1NoPointer = {
         0,
         0,
         0,
-        0
+        0,
+        false
+
+
 };
 
 struct Usart *usart1 = &usart1NoPointer;
 
 ISR(USART1_TX_vect)
 {
-    if(usart1->txBufferTail + 1 <= usart1->txBufferHead)
-    {
-        usart_write(usart1, usart1->txBuffer[usart1->txBufferTail++  % USART_BUFFER_SIZE]);
-    }
+    usart_writeFromInterrupt(usart1);
 }
 
 ISR(USART1_RX_vect)
@@ -257,17 +286,15 @@ static struct Usart usart2NoPointer = {
         0,
         0,
         0,
-        0
+        0,
+        false
 };
 
 struct Usart *usart2 = &usart2NoPointer;
 
 ISR(USART2_TX_vect)
 {
-    if(usart2->txBufferTail + 1 <= usart2->txBufferHead)
-    {
-        usart_write(usart2, usart2->txBuffer[usart2->txBufferTail++  % USART_BUFFER_SIZE]);
-    }
+    usart_writeFromInterrupt(usart2);
 }
 
 ISR(USART2_RX_vect)
@@ -291,17 +318,15 @@ static struct Usart usart3NoPointer = {
         0,
         0,
         0,
-        0
+        0,
+        false
 };
 
 struct Usart *usart3 = &usart3NoPointer;
 
 ISR(USART3_TX_vect)
 {
-    if(usart3->txBufferTail + 1 <= usart3->txBufferHead)
-    {
-        usart_write(usart3, usart3->txBuffer[usart3->txBufferTail++  % USART_BUFFER_SIZE]);
-    }
+    usart_writeFromInterrupt(usart3);
 }
 
 ISR(USART3_RX_vect)
