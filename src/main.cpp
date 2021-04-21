@@ -85,11 +85,7 @@ int main()
     dio_setDirection(led, true);
     usart_begin(usart0, 9600);
     usart_enableRS485FlowControl(usart0, led);
-    for(int i = 0; i < 100; i++)
-    {
-        while (!usart_println(usart0, "1 2 3 4 5 6 7 8 9 10"));
-        _delay_ms(100);
-    }
+    while (!usart_println(usart0, "Hoi"));
 //    UDR0 = 'c';
 
     for(;;)
