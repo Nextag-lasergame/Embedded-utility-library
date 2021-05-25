@@ -11,10 +11,11 @@ extern "C" {
 
 #include "EUL/platform/platform.h"
 
+#include "EUL/HAL/delay.h"
 #include "EUL/HAL/digital_io.h"
+#include "EUL/HAL/timer.h"
 #include "EUL/HAL/twi.h"
 #include "EUL/HAL/usart.h"
-#include "EUL/HAL/timer.h"
 
 #include "EUL/util/defaultloggers.h"
 #include "EUL/util/logger.h"
