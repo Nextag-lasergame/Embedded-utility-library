@@ -6,7 +6,7 @@
 #define EMBEDDED_UTILITY_LIBRARY_DELAY_H
 
 #ifdef __cplusplus
-{
+extern "C" {
 #endif
 
 #ifndef F_CPU
@@ -17,7 +17,7 @@
 void delay_ms(double ms);
 
 #ifdef __cplusplus
-};
+}
 #endif
 
 #endif //EMBEDDED_UTILITY_LIBRARY_DELAY_H
