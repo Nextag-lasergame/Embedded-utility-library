@@ -6,10 +6,13 @@
 #include <EUL/EUL.h>
 #include <unity.h>
 #include "string.h"
+#include "stdlib.h"
+#include "stdio.h"
 
 void llCreateCalledSuccessfully_returnsLinkedList();
 void llAddCalledSuccessfully_addsToLinkedList();
 void llRemoveIndexCalledSuccessfully_returnsTrue();
+void llRemoveIndexCalledSuccessfullyMultipleItems_returnsTrue();
 void llRemoveIndexCalledIndexOutOfBounds_returnsFalse();
 void llGetSizeCalledSuccessfully_returnsSize();
 void llGetIndexCalledSuccessfully_returnsValue();
@@ -20,6 +23,7 @@ void linked_list_test()
     RUN_TEST(llCreateCalledSuccessfully_returnsLinkedList);
     RUN_TEST(llAddCalledSuccessfully_addsToLinkedList);
     RUN_TEST(llRemoveIndexCalledSuccessfully_returnsTrue);
+    RUN_TEST(llRemoveIndexCalledSuccessfullyMultipleItems_returnsTrue);
     RUN_TEST(llRemoveIndexCalledIndexOutOfBounds_returnsFalse);
     RUN_TEST(llGetSizeCalledSuccessfully_returnsSize);
     RUN_TEST(llGetIndexCalledSuccessfully_returnsValue);
@@ -41,12 +45,12 @@ void llAddCalledSuccessfully_addsToLinkedList()
 
     ll_add(list, "test");
     
-    TEST_ASSERT_EQUAL_INT32(1, list->size);
+    TEST_ASSERT_EQUAL_UINT32(1, list->size);
     TEST_ASSERT_NOT_NULL(list->head);
     TEST_ASSERT_EQUAL_STRING("test", list->head->value);
 
     ll_add(list, "test2");
-    TEST_ASSERT_EQUAL_INT32(2, list->size);
+    TEST_ASSERT_EQUAL_UINT32(2, list->size);
     TEST_ASSERT_NOT_NULL(list->head->next);
     TEST_ASSERT_EQUAL_STRING("test2", list->head->next->value);
     ll_delete(list);
@@ -60,6 +64,18 @@ void llRemoveIndexCalledSuccessfully_returnsTrue()
     TEST_ASSERT_TRUE_MESSAGE(result, "ll_removeIndex returned false");
     TEST_ASSERT_NULL_MESSAGE(list->head, "The list head is not null");
     TEST_ASSERT_EQUAL_UINT32_MESSAGE(0, list->size, "The list size is not 0");
+    ll_delete(list);
+}
+
+void llRemoveIndexCalledSuccessfullyMultipleItems_returnsTrue()
+{
+    LinkedList_t *list = ll_create();
+    ll_add(list, "test");
+    ll_add(list, "test2");
+    bool result = ll_removeIndex(list, 0);
+    TEST_ASSERT_TRUE_MESSAGE(result, "ll_removeIndex returned false");
+    TEST_ASSERT_EQUAL_UINT32_MESSAGE(1, list->size, "The list size is not 1");
+    TEST_ASSERT_EQUAL_STRING_MESSAGE("test2", list->head->value, "Message in element 0 is not equal to \"test2\"");
     ll_delete(list);
 }
 

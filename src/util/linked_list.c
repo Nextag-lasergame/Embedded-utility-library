@@ -13,27 +13,89 @@ LinkedList_t *ll_create()
     return list;
 }
 
-void ll_add(LinkedList_t *list, const char *value)
+void ll_add(LinkedList_t *list, char *value)
 {
+    struct ListNode* node = malloc(sizeof(struct ListNode));
+    node->value = value;
+    node->next = 0x00;
 
+    if(list->size == 0)
+    {
+        list->head = node;
+        list->size = 1;
+        return;
+    }
+
+    struct ListNode* current = list->head;
+
+    while(current->next != NULL)
+    {
+        current = current->next;
+    }
+
+    current->next = node;
+    list->size++;
 }
 
 bool ll_removeIndex(LinkedList_t *list, uint32_t index)
 {
-    return false;
+    if (index >= list->size)
+        return false;
+
+    struct ListNode *last = list->head;
+    struct ListNode *current = list->head;
+
+    for (uint32_t i = 0; i < index; i++)
+    {
+        last = current;
+        current = current->next;
+    }
+
+    struct ListNode *next = current->next;
+    free(current->value);
+    free(current);
+
+    if (index == 0)
+        list->head = next;
+    else
+        last->next = next;
+
+    list->size--;
+
+    return true;
 }
 
 uint32_t ll_getSize(LinkedList_t *list)
 {
-    return 0;
+    return list->size;
 }
 
 const char *ll_getIndex(LinkedList_t *list, uint32_t index)
 {
-    return 0x00;
+    if (index >= list->size)
+        return NULL;
+
+    struct ListNode* current = list->head;
+
+    for(uint32_t i = 0; i < index; i++)
+    {
+        current = current->next;
+    }
+
+    return current->value;
 }
 
 void ll_delete(LinkedList_t *list)
 {
+    struct ListNode *next = list->head;
+    struct ListNode *current = NULL;
+    while(next != NULL)
+    {
+        current = next;
+        next = current->next;
 
+        free(current->value);
+        free(current);
+    }
+    free(list);
 }
