@@ -15,6 +15,8 @@
  * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+#ifndef NATIVE_BUILD
+
 #include "EUL/modules/IRRemote/ir_remote.h"
 #include <stdbool.h>
 #include <stdio.h>
@@ -298,3 +300,5 @@ static void ir_timerCallback()
             break;
     }
 }
+
+#endif

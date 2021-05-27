@@ -15,6 +15,8 @@
  * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+#ifndef NATIVE_BUILD
+
 #include "EUL/HAL/usart.h"
 #include <avr/interrupt.h>
 #include <string.h>
@@ -339,3 +341,5 @@ ISR(USART3_RX_vect)
 #endif // USART_COUNT > 2
 #endif // USART_COUNT > 1
 #endif // defined(USART_COUNT) && USART_COUNT > 0
+
+#endif

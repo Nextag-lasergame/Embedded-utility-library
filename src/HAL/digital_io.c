@@ -14,7 +14,7 @@
  * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
  * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-
+#ifndef NATIVE_BUILD
 #include <avr/io.h>
 #include "EUL/HAL/digital_io.h"
 
@@ -38,3 +38,4 @@ bool dio_getInput(Pin_t pin)
 {
     return (_SFR_MEM8(pin.pinRegister) & _BV(pin.bit));
 }
+#endif
