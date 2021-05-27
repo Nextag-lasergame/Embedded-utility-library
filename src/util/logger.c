@@ -14,7 +14,7 @@
  * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
  * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-
+#ifndef NATIVE_BUILD
 #define LOGGER_IMPLEMENTATION
 #include "EUL/util/logger.h"
 
@@ -103,3 +103,4 @@ static void log(const char *levelText, const char *msg)
             loggers[i]->log(totalMsg);
     }
 }
+#endif

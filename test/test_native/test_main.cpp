@@ -10,7 +10,6 @@ void test()
 
 int main()
 {
-    delay_ms(2000);
     UNITY_BEGIN();
     RUN_TEST(test);
     UNITY_END();

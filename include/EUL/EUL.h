@@ -9,6 +9,8 @@
 extern "C" {
 #endif
 
+#ifndef NATIVE_BUILD
+
 #include "EUL/platform/platform.h"
 
 #include "EUL/HAL/delay.h"
@@ -20,6 +22,8 @@ extern "C" {
 #include "EUL/util/defaultloggers.h"
 #include "EUL/util/logger.h"
 #include "EUL/util/loglevels.h"
+
+#endif
 
 #ifdef __cplusplus
 }

@@ -15,6 +15,8 @@
  * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+#ifndef NATIVE_BUILD
+
 #include "EUL/util/defaultloggers.h"
 #include "EUL/HAL/usart.h"
 
@@ -43,3 +45,5 @@ void usartLoggerLog(const char * msg)
 {
     while(!usart_println(usart0, msg));
 }
+
+#endif
