@@ -26,6 +26,7 @@ extern "C" {
 #endif
 
 #include "EUL/util/linked_list.h"
+#include "EUL/util/state_machine.h"
 
 #ifdef __cplusplus
 }

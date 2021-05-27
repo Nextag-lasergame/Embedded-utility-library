@@ -18,7 +18,7 @@ void llGetSizeCalledSuccessfully_returnsSize();
 void llGetIndexCalledSuccessfully_returnsValue();
 void llGetIndexCalledIndexOutOfBounds_returnsNull();
 
-void linked_list_test()
+void linkedListTest()
 {
     RUN_TEST(llCreateCalledSuccessfully_returnsLinkedList);
     RUN_TEST(llAddCalledSuccessfully_addsToLinkedList);

@@ -6,7 +6,7 @@
 #define EMBEDDED_UTILITY_LIBRARY_LINKED_LIST_TEST_H
 
 
-void linked_list_test();
+void linkedListTest();
 
 
 #endif //EMBEDDED_UTILITY_LIBRARY_LINKED_LIST_TEST_H
