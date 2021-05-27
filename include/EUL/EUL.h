@@ -25,6 +25,8 @@ extern "C" {
 
 #endif
 
+#include "EUL/util/linked_list.h"
+
 #ifdef __cplusplus
 }
 #endif
