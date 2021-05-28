@@ -17,6 +17,7 @@
 
 #include "EUL/util/linked_list.h"
 #include "stdlib.h"
+#include "string.h"
 
 LinkedList_t *ll_create()
 {
@@ -26,10 +27,11 @@ LinkedList_t *ll_create()
     return list;
 }
 
-void ll_add(LinkedList_t *list, char *value)
+void ll_add(LinkedList_t *list, const char *value)
 {
     struct ListNode* node = malloc(sizeof(struct ListNode));
-    node->value = value;
+    node->value = malloc(strlen(value) * sizeof(char) + 1);
+    memcpy(node->value, value, strlen(value) * sizeof(char) + 1);
     node->next = 0x00;
 
     if(list->size == 0)

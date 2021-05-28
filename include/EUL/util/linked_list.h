@@ -50,7 +50,7 @@ LinkedList_t *ll_create();
  * @param list The list  to add to
  * @param value The value to add
  */
-void ll_add(LinkedList_t *list, char *value);
+void ll_add(LinkedList_t *list, const char *value);
 
 /**
  * @brief Removes a specific node, identified with the index, from the linked list. The index can't be bigger then the size of the linked list.
