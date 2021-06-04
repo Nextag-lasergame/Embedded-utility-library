@@ -9,6 +9,25 @@
 #include "stdlib.h"
 #include "stdio.h"
 
+// TODO: Remove these structs from here, shouldn't be here :(
+/**
+ * @brief Struct defining a linked list node
+ */
+struct ListNode
+{
+    struct ListNode *next;
+    char *value;
+};
+
+/**
+ * @brief Struct defining the linked list. This struct is not meant to be edited by the user.
+ */
+typedef struct linkedList
+{
+    struct ListNode *head;
+    uint32_t size;
+} LinkedList_t;
+
 void llCreateCalledSuccessfully_returnsLinkedList();
 void llAddCalledSuccessfully_addsToLinkedList();
 void llRemoveIndexCalledSuccessfully_returnsTrue();

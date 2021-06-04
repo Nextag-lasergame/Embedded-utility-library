@@ -19,6 +19,24 @@
 #include "stdlib.h"
 #include "string.h"
 
+/**
+ * @brief Struct defining a linked list node
+ */
+struct ListNode
+{
+    struct ListNode *next;
+    char *value;
+};
+
+/**
+ * @brief Struct defining the linked list. This struct is not meant to be edited by the user.
+ */
+typedef struct linkedList
+{
+    struct ListNode *head;
+    uint32_t size;
+} LinkedList_t;
+
 LinkedList_t *ll_create()
 {
     LinkedList_t *list = malloc(sizeof(LinkedList_t));

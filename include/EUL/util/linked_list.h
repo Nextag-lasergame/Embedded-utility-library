@@ -21,23 +21,7 @@
 #include <inttypes.h>
 #include "stdbool.h"
 
-/**
- * @brief Struct defining a linked list node
- */
-struct ListNode
-{
-    struct ListNode *next;
-    char *value;
-};
-
-/**
- * @brief Struct defining the linked list. This struct is not meant to be edited by the user.
- */
-typedef struct
-{
-    struct ListNode *head;
-    uint32_t size;
-} LinkedList_t;
+typedef struct linkedList LinkedList_t;
 
 /**
  * @brief Creates a new linked list.
