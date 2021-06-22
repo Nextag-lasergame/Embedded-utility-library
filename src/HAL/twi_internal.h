@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Tim Herreijgers
+ * Copyright (c) 2020-2021 Tim Herreijgers
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
  * documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
@@ -16,8 +16,6 @@
  */
 
 #include <inttypes.h>
-
-#ifdef __AVR_ATmega328P__
 
 #ifndef TWI_FREQ
 #define TWI_FREQ 100000L
@@ -114,5 +112,3 @@
 #define TWI_MRX 2
 #define TWI_STX 3
 #define TWI_SRX 4
-
-#endif

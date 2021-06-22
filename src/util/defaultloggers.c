@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Tim Herreijgers
+ * Copyright (c) 2020-2021 Tim Herreijgers
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
  * documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
@@ -14,6 +14,8 @@
  * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
  * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
+
+#ifndef NATIVE_BUILD
 
 #include "EUL/util/defaultloggers.h"
 #include "EUL/HAL/usart.h"
@@ -31,15 +33,17 @@ Logger_t usartLogger115200 = { usartLogger115200Init, usartLoggerLog };
 
 void usartLogger9600Init()
 {
-    usart_begin(9600);
+    usart_begin(usart0, 9600);
 }
 
 void usartLogger115200Init()
 {
-    usart_begin(115200);
+    usart_begin(usart0, 115200);
 }
 
 void usartLoggerLog(const char * msg)
 {
-    while(!usart_println(msg));
+    while(!usart_println(usart0, msg));
 }
+
+#endif

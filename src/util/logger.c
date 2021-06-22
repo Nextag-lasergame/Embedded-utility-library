@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Tim Herreijgers
+ * Copyright (c) 2020-2021 Tim Herreijgers
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
  * documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
@@ -15,6 +15,7 @@
  * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+#ifndef NATIVE_BUILD
 #define LOGGER_IMPLEMENTATION
 #include "EUL/util/logger.h"
 
@@ -103,3 +104,4 @@ static void log(const char *levelText, const char *msg)
             loggers[i]->log(totalMsg);
     }
 }
+#endif

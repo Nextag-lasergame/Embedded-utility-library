@@ -1,0 +1,12 @@
+//
+// Created by timti on 27/05/2021.
+//
+
+#ifndef EMBEDDED_UTILITY_LIBRARY_LINKED_LIST_TEST_H
+#define EMBEDDED_UTILITY_LIBRARY_LINKED_LIST_TEST_H
+
+
+void linkedListTest();
+
+
+#endif //EMBEDDED_UTILITY_LIBRARY_LINKED_LIST_TEST_H

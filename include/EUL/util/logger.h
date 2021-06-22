@@ -1,3 +1,20 @@
+/*
+ * Copyright (c) 2020-2021 Tim Herreijgers
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
+ * documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
+ * rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to
+ * permit persons to whom the Software is furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all copies or substantial
+ * portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO
+ * THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+ * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */
+
 #ifndef EMBEDDED_UTILITY_LIBRARY_LOGGER_H
 #define EMBEDDED_UTILITY_LIBRARY_LOGGER_H
 
@@ -14,6 +31,10 @@
 #define LOG_LEVEL_TEXT_INFO  "[INFO]  "
 #define LOG_LEVEL_TEXT_WARN  "[WARN]  "
 #define LOG_LEVEL_TEXT_ERROR "[ERROR] "
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 #ifndef LOG_LEVEL
 #warning LOG_LEVEL not defined, defaulting it to LOG_LEVEL_DEBUG. Please define the LOG_LEVEL as an global define using -DLOG_LEVEL={level here}. Possible log levels: LOG_LEVEL_TRACE, LOG_LEVEL_DEBUG, LOG_LEVEL_INFO, LOG_LEVEL_WARN, LOG_LEVEL_ERROR and LOG_LEVEL_DISABLED
@@ -70,6 +91,10 @@ void logger_error(const char *msg);
 #define logger_error(message)
 #endif
 
+#endif
+
+#ifdef __cplusplus
+}
 #endif
 
 #endif //EMBEDDED_UTILITY_LIBRARY_LOGGER_H

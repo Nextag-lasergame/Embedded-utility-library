@@ -9,14 +9,24 @@
 extern "C" {
 #endif
 
+#ifndef NATIVE_BUILD
+
+#include "EUL/platform/platform.h"
+
+#include "EUL/HAL/delay.h"
 #include "EUL/HAL/digital_io.h"
+#include "EUL/HAL/timer.h"
 #include "EUL/HAL/twi.h"
 #include "EUL/HAL/usart.h"
-#include "EUL/HAL/timer.h"
 
 #include "EUL/util/defaultloggers.h"
 #include "EUL/util/logger.h"
 #include "EUL/util/loglevels.h"
+
+#endif
+
+#include "EUL/util/linked_list.h"
+#include "EUL/util/state_machine.h"
 
 #ifdef __cplusplus
 }

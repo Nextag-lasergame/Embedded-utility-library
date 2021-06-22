@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Tim Herreijgers
+ * Copyright (c) 2020-2021 Tim Herreijgers
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
  * documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
@@ -15,13 +15,13 @@
  * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+#ifndef UNIT_TEST
+
 #if 0
 
 //#define F_CPU 16000000L
 
 #define print(x) while(!usart_println(x))
-
-#define assert_true(statement, message) if(!statement) logger_debug(message)
 
 #include <EUL/EUL.h>
 extern "C" {
@@ -76,9 +76,30 @@ int main()
 
 #ifdef EUL_TEST_BUILD
 
+#define F_CPU 16000000L
+
+#include "EUL/EUL.h"
+#include "avr/delay.h"
+
 int main()
 {
+    Pin_t led = DIO_PB6;
+    dio_setDirection(led, true);
+    usart_begin(usart0, 9600);
+    usart_enableRS485FlowControl(usart0, led);
+    while (!usart_println(usart0, "Hoi"));
+//    UDR0 = 'c';
+
+    for(;;)
+    {
+        dio_setOutput(led, true);
+        _delay_ms(1000);
+        dio_setOutput(led, false);
+        _delay_ms(1000);
+    }
+
     return 0;
 }
 
+#endif
 #endif
