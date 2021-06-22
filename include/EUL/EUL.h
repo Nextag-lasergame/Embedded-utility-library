@@ -19,8 +19,6 @@ extern "C" {
 #include "EUL/HAL/twi.h"
 #include "EUL/HAL/usart.h"
 
-#include "EUL/util/defaultloggers.h"
-#include "EUL/util/logger.h"
 #include "EUL/util/loglevels.h"
 
 #endif

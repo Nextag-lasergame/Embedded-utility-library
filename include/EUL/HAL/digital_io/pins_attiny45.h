@@ -1,3 +1,4 @@
+
 /*
  * Copyright (c) 2020-2021 Tim Herreijgers
  *
@@ -15,35 +16,14 @@
  * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-#ifndef NATIVE_BUILD
+#ifndef EMBEDDED_UTILITY_LIBRARY_PINS_ATTINY45_H
+#define EMBEDDED_UTILITY_LIBRARY_PINS_ATTINY45_H
 
-#include "EUL/util/defaultloggers.h"
-#include "EUL/HAL/usart.h"
+#define DIO_PB0 {0x0016001700180000}
+#define DIO_PB1 {0x0016001700180001}
+#define DIO_PB2 {0x0016001700180002}
+#define DIO_PB3 {0x0016001700180003}
+#define DIO_PB4 {0x0016001700180004}
+#define DIO_PB5 {0x0016001700180005}
 
-#define F_CPU 16000000L
-#include <util/delay.h>
-#include <avr/io.h>
-
-void usartLogger9600Init();
-void usartLogger115200Init();
-void usartLoggerLog(const char * msg);
-
-Logger_t usartLogger9600 = { usartLogger9600Init, usartLoggerLog };
-Logger_t usartLogger115200 = { usartLogger115200Init, usartLoggerLog };
-
-void usartLogger9600Init()
-{
-    usart_begin(usart0, 9600);
-}
-
-void usartLogger115200Init()
-{
-    usart_begin(usart0, 115200);
-}
-
-void usartLoggerLog(const char * msg)
-{
-    while(!usart_println(usart0, msg));
-}
-
-#endif
+#endif //EMBEDDED_UTILITY_LIBRARY_PINS_ATTINY45_H

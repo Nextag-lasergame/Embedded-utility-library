@@ -26,9 +26,6 @@
 #include "avr/io.h"
 
 #ifdef EUL_TEST_BUILD
-#define log(x) while(!usart_print(x))
-#define logln(x) while(!usart_println(x))
-#else
 #define log(x)
 #define logln(x)
 #endif

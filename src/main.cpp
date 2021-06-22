@@ -74,32 +74,17 @@ int main()
 }
 #endif
 
-#ifdef EUL_TEST_BUILD
-
-#define F_CPU 16000000L
-
 #include "EUL/EUL.h"
-#include "avr/delay.h"
 
 int main()
 {
-    Pin_t led = DIO_PB6;
-    dio_setDirection(led, true);
-    usart_begin(usart0, 9600);
-    usart_enableRS485FlowControl(usart0, led);
-    while (!usart_println(usart0, "Hoi"));
-//    UDR0 = 'c';
+    dio_setDirection(DIO_PB0, true);
+    dio_setOutput(DIO_PB0, true);
 
     for(;;)
     {
-        dio_setOutput(led, true);
-        _delay_ms(1000);
-        dio_setOutput(led, false);
-        _delay_ms(1000);
+        
     }
-
-    return 0;
 }
 
-#endif
 #endif

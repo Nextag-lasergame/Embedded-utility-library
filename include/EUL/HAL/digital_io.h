@@ -40,12 +40,12 @@ typedef struct
     };
 } Pin_t;
 
-#ifdef __AVR_ATmega328P__
-
-#include "digital_io/pins_atmega328p.h"
-
+#ifdef __AVR_ATtiny45__
+#include "digital_io/pins_attiny45.h"
 #endif
-
+#ifdef __AVR_ATmega328P__
+#include "digital_io/pins_atmega328p.h"
+#endif
 #ifdef __AVR_ATmega2560__
 #include "digital_io/pins_atmega2560.h"
 #endif
