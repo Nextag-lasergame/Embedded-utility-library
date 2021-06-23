@@ -74,16 +74,14 @@ int main()
 }
 #endif
 
-#include "EUL/EUL.h"
+#include "avr/io.h"
 
 int main()
 {
-    dio_setDirection(DIO_PB0, true);
-    dio_setOutput(DIO_PB0, true);
-
+    DDRB = 0xFF;
     for(;;)
     {
-        
+
     }
 }
 

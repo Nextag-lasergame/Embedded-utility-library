@@ -1,3 +1,4 @@
+
 /*
  * Copyright (c) 2020-2021 Tim Herreijgers
  *
@@ -15,52 +16,9 @@
  * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-#ifndef EMBEDDED_UTILITY_LIBRARY_DIGITAL_IO_H
-#define EMBEDDED_UTILITY_LIBRARY_DIGITAL_IO_H
+#ifndef EMBEDDED_UTILITY_LIBRARY_ATTINY45_H
+#define EMBEDDED_UTILITY_LIBRARY_ATTINY45_H
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+#define USART_COUNT 0
 
-#include <inttypes.h>
-#include "stdbool.h"
-
-typedef struct
-{
-    union
-    {
-        uint64_t value;
-        struct
-        {
-            uint16_t bit;
-            uint16_t portRegister;
-            uint16_t ddrRegister;
-            uint16_t pinRegister;
-        };
-    };
-} Pin_t;
-
-#define PIN_SHIFT(x) x << 24
-#define DDR_SHIFT(x) x << 16
-#define PORT_SHIFT(x) x << 8
-#define BIT_SHIFT(x) x
-
-#ifdef __AVR_ATtiny45__
-#include "digital_io/pins_attiny45.h"
-#endif
-#ifdef __AVR_ATmega328P__
-#include "digital_io/pins_atmega328p.h"
-#endif
-#ifdef __AVR_ATmega2560__
-#include "digital_io/pins_atmega2560.h"
-#endif
-
-extern void dio_setDirection(Pin_t pin, bool output);
-extern void dio_setOutput(Pin_t pin, bool high);
-extern bool dio_getInput(Pin_t pin);
-
-#ifdef __cplusplus
-}
-#endif
-
-#endif //EMBEDDED_UTILITY_LIBRARY_DIGITAL_IO_H
+#endif //EMBEDDED_UTILITY_LIBRARY_ATTINY45_H

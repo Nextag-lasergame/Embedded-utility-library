@@ -3,3 +3,5 @@ CMakeListsPrivate.txt
 CMakeLists.txt
 cmake-build-*/
 .vscode
+.idea
+CMakeLists*.txt

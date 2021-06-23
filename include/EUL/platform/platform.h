@@ -30,6 +30,10 @@ extern "C" {
 #include "atmega/atmega2560.h"
 #endif
 
+#if __AVR_ATtiny45__
+#include "attiny/attiny45.h"
+#endif
+
 #ifdef __cplusplus
 }
 #endif
