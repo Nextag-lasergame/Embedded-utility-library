@@ -80,6 +80,10 @@ int main()
 {
     dio_setDirection(DIO_PB3, true);
     dio_setOutput(DIO_PB3, true);
+
+    Timer_t *timer = timer_create(TIMER_0);
+    timer_initCtc(timer, PRESCALER_1024);
+
     for(;;)
     {
 

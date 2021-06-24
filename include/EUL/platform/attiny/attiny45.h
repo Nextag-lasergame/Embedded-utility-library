@@ -19,7 +19,7 @@
 #ifndef EMBEDDED_UTILITY_LIBRARY_ATTINY45_H
 #define EMBEDDED_UTILITY_LIBRARY_ATTINY45_H
 
-#pragma region digital_input_output
+#include "../platform_macros.h"
 
 #define DIO_PB0 {PIN_SHIFT(0x36) | DDR_SHIFT(0x37) | PORT_SHIFT(0x38) | BIT_SHIFT(0x00) }
 #define DIO_PB1 {PIN_SHIFT(0x36) | DDR_SHIFT(0x37) | PORT_SHIFT(0x38) | BIT_SHIFT(0x01) }
@@ -27,21 +27,16 @@
 #define DIO_PB3 {PIN_SHIFT(0x36) | DDR_SHIFT(0x37) | PORT_SHIFT(0x38) | BIT_SHIFT(0x03) }
 #define DIO_PB4 {PIN_SHIFT(0x36) | DDR_SHIFT(0x37) | PORT_SHIFT(0x38) | BIT_SHIFT(0x04) }
 #define DIO_PB5 {PIN_SHIFT(0x36) | DDR_SHIFT(0x37) | PORT_SHIFT(0x38) | BIT_SHIFT(0x05) }
-#pragma endregion
 
-#pragma region timers
-
-#define TIMER_0 {TIMER_FLAGS(TIMER_FLAG_8_BIT | TIMER_PWM_ENABLED) | \
-                TIMER_PRESCALERS(TIMER_PRESCALER_1(0b001) | TIMER_PRESCALER_8(0b010) | \
+#define TIMER_0 TIMER_FLAGS(TIMER_FLAG_8_BITS | TIMER_FLAG_PWM_ENABLED) | \
+                TIMER_PRESCALERS((TIMER_PRESCALER_1(0b001) | TIMER_PRESCALER_8(0b010) | \
                                  TIMER_PRESCALER_64(0b011) | TIMER_PRESCALER_256(0b100) | \
                                  TIMER_PRESCALER_1024(0b101), TIMER_PRESCALER_EXTERNAL_FALLING (0b110) | \
-                                 TIMER_PRESCALER_EXTERNAL_RISING(0b111)) | \
+                                 TIMER_PRESCALER_EXTERNAL_RISING(0b111))) | \
                 TIMER_INTERRUPT_SHIFT(0x059) | \
                 TIMER_OUTPUTA_SHIFT(0x39) | \
                 TIMER_CONTROLA_SHIFT(0x3A) | \
-                TIMER_CONTROLB_SHIFT(0x53)}
-
-#pragma endregion
+                TIMER_CONTROLB_SHIFT(0x53)
 
 #define USART_COUNT 0
 
