@@ -40,19 +40,20 @@ typedef struct
     };
 } Pin_t;
 
-#define PIN_SHIFT(x) x << 24
-#define DDR_SHIFT(x) x << 16
-#define PORT_SHIFT(x) x << 8
-#define BIT_SHIFT(x) x
+#define PIN_SHIFT(x) ((uint64_t) x << (uint64_t) 48)
+#define DDR_SHIFT(x) ((uint64_t) x << (uint64_t) 32)
+#define PORT_SHIFT(x) ((uint64_t) x << (uint64_t) 16)
+#define BIT_SHIFT(x) ((uint64_t) x)
 
-#ifdef __AVR_ATtiny45__
-#include "digital_io/pins_attiny45.h"
-#endif
 #ifdef __AVR_ATmega328P__
 #include "digital_io/pins_atmega328p.h"
 #endif
 #ifdef __AVR_ATmega2560__
 #include "digital_io/pins_atmega2560.h"
+#endif
+
+#ifdef __AVR_ATtiny45__
+#include "digital_io/pins_attiny45.h"
 #endif
 
 extern void dio_setDirection(Pin_t pin, bool output);
