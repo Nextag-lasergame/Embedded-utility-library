@@ -40,11 +40,6 @@ typedef struct
     };
 } Pin_t;
 
-#define PIN_SHIFT(x) ((uint64_t) x << (uint64_t) 48)
-#define DDR_SHIFT(x) ((uint64_t) x << (uint64_t) 32)
-#define PORT_SHIFT(x) ((uint64_t) x << (uint64_t) 16)
-#define BIT_SHIFT(x) ((uint64_t) x)
-
 #ifdef __AVR_ATmega328P__
 #include "digital_io/pins_atmega328p.h"
 #endif
