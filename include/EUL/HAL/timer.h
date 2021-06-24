@@ -23,6 +23,7 @@ bool timer_initCtc(Timer_t *timer, enum TimerPrescaler);
 void timer_stop(Timer_t *timer);
 void timer_setCompA(Timer_t *timer, uint16_t compA);
 void timer_setCompB(Timer_t *timer, uint16_t compB);
-void timer_setCallback(Timer_t *timer, enum TimerCallback callback, void (*callbackFunction));
+bool timer_setCallback(Timer_t *timer, enum TimerCallback callback, void (*callbackFunction));
+bool timer_clearCallback(Timer_t *timer, enum TimerCallback callback);
 
 #endif
