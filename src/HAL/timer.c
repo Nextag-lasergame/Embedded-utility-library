@@ -3,6 +3,9 @@
 
 #include <avr/io.h>
 #include <avr/interrupt.h>
+#include <stdlib.h>
+
+#include "EUL/HAL/digital_io.h"
 
 struct Timer
 {
@@ -44,12 +47,12 @@ bool timer_delete(Timer_t *timer)
 
 bool timer_initCtc(Timer_t *timer, enum TimerPrescaler prescaler)
 {
-    uint8_t prescalerValue = (timer->flagsAndPrescalers & (0b111 << prescaler * 3 + 2)) >> prescaler * 3 + 2;
+    uint8_t prescalerValue = ((timer->flagsAndPrescalers & (0b111 << prescaler * 3 + 2)) >> (prescaler * 3 + 2));
     if (prescalerValue == 0)
         return false;
 
     _MMIO_BYTE(timer->registerControlA) |= (1 << WGM01); // Set mode to CTC
-    _MMIO_BYTE(timer->registerControlB) |= (prescaler & 0b001 << CS00) | (prescaler & 0b010 << CS01) | (prescaler & 0b100 << CS02);
+    _MMIO_BYTE(timer->registerControlB) |= _BV(CS00); //(prescaler & 0b001 << CS00) | (prescaler & 0b010 << CS01) | (prescaler & 0b100 << CS02);
 
     return true;
 }
@@ -63,6 +66,7 @@ void timer_stop(Timer_t *timer)
 void timer_setCompA(Timer_t *timer, uint16_t compA)
 {    
     _MMIO_BYTE(timer->registerOutputA) = (uint8_t) compA;
+    _MMIO_BYTE(timer->registerControlB) |= _BV(FOC0A);
 }
 
 // TODO: Differentiate between 16 and 8 bit timers. 
@@ -89,10 +93,21 @@ bool timer_clearCallback(Timer_t *timer, enum TimerCallback callback)
     return true;
 }
 
-ISR(TIMER0_COMPA_vect)
-{
-    
-}
+//ISR(TIMER0_COMPA_vect)
+//{
+//    // for(uint8_t i = 0; i < TIMER_COUNT; i++)
+//    // {
+//    //     if(timerMap[i] == timersBuffer[i]->value)
+//    //     {
+//    //         if(timersBuffer[i]->callbacks[0] != 0x00)
+//    //         {
+//    //             timersBuffer[i]->callbacks[0]();
+//    //         }
+//    //     }
+//    // }
+//    Pin_t led = DIO_PB3;
+//    dio_setOutput(led, true);
+//}
 
 ISR(TIMER0_COMPB_vect)
 {

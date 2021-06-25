@@ -75,19 +75,41 @@ int main()
 #endif
 
 #include "EUL/EUL.h"
+#include "avr/io.h"
+#include "avr/interrupt.h"
 
 int main()
 {
-    dio_setDirection(DIO_PB3, true);
-    dio_setOutput(DIO_PB3, true);
+//    CLKPR = (1 << CLKPS3);
 
-    Timer_t *timer = timer_create(TIMER_0);
-    timer_initCtc(timer, PRESCALER_1024);
+    dio_setDirection(DIO_PB3, true);
+//    dio_setOutput(DIO_PB3, true);
+
+//    Timer_t *timer = timer_create(TIMER_0);
+//    timer_initCtc(timer, PRESCALER_1);
+//    timer_setCompA(timer, 250);
+
+    cli();
+    // Set mode to CTC
+    TCCR0A = _BV(WGM01);
+    // Set compare mode and prescaler
+    TCCR0B = _BV(FOC0A) | _BV(CS02) | _BV(CS00);
+    // Set max value
+    OCR0A = 250;
+    // Setup interrupt
+    TIMSK |= _BV(OCIE0A) | _BV(OCIE0B) | _BV(TOIE0);
+    sei();
+
 
     for(;;)
     {
 
     }
+}
+
+ISR(TIMER0_COMPA_vect)
+{
+    dio_setOutput(DIO_PB3, !dio_getInput(DIO_PB3));
 }
 
 #endif
