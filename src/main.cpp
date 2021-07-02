@@ -85,20 +85,20 @@ int main()
     dio_setDirection(DIO_PB3, true);
 //    dio_setOutput(DIO_PB3, true);
 
-//    Timer_t *timer = timer_create(TIMER_0);
-//    timer_initCtc(timer, PRESCALER_1);
-//    timer_setCompA(timer, 250);
+   Timer_t *timer = timer_create(TIMER_0);
+   timer_initCtc(timer, PRESCALER_1);
+   timer_setCompA(timer, 250);
 
-    cli();
-    // Set mode to CTC
-    TCCR0A = _BV(WGM01);
-    // Set compare mode and prescaler
-    TCCR0B = _BV(FOC0A) | _BV(CS02) | _BV(CS00);
-    // Set max value
-    OCR0A = 250;
-    // Setup interrupt
-    TIMSK |= _BV(OCIE0A) | _BV(OCIE0B) | _BV(TOIE0);
-    sei();
+    // cli();
+    // // Set mode to CTC
+    // TCCR0A = _BV(WGM01);
+    // // Set compare mode and prescaler
+    // TCCR0B |= _BV(CS02) | _BV(CS00);
+    // // Set max value
+    // OCR0A = 250;
+    // // Setup interrupt
+    // TIMSK |= _BV(OCIE0A) | _BV(OCIE0B) | _BV(TOIE0);
+    // sei();
 
 
     for(;;)
