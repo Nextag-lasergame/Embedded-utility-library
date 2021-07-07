@@ -72,10 +72,12 @@ ISR(TIMER0_COMPA_vect)
 
 ISR(TIMER0_COMPB_vect)
 {
-    
+    if(timer0->callbacks[ON_MATCH_COMP_B] != 0x00)
+        timer0->callbacks[ON_MATCH_COMP_B]();
 }
 
 ISR(TIMER0_OVF_vect)
 {
-    
+    if(timer0->callbacks[ON_OVERFLOW] != 0x00)
+        timer0->callbacks[ON_OVERFLOW]();
 }
