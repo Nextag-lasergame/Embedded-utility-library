@@ -18,8 +18,6 @@
 #ifndef UNIT_TEST
 
 #include "EUL/EUL.h"
-#include "avr/io.h"
-#include "avr/interrupt.h"
 
 void callback()
 {
