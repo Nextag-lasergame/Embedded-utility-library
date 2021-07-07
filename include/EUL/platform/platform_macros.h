@@ -6,18 +6,7 @@
 #define PORT_SHIFT(x) ((uint64_t) x << (uint64_t) 16)
 #define BIT_SHIFT(x) ((uint64_t) x)
 
-#define TIMER_CONTROLA_SHIFT(x) ((uint64_t) x << 56)
-#define TIMER_CONTROLB_SHIFT(x) ((uint64_t) x << 48)
-#define TIMER_OUTPUTA_SHIFT(x) ((uint64_t) x << 40)
-#define TIMER_INTERRUPT_SHIFT(x) ((uint64_t) x << 32)
-#define TIMER_PRESCALERS(x) ((uint64_t) x << 2)
-#define TIMER_FLAGS(x) ((uint64_t) x)
-
-#define TIMER_CONTROLA_SHIFT(x) ((uint64_t) x << 56)
-#define TIMER_OUTPUTA_SHIFT(x) ((uint64_t) x << 48)
-#define TIMER_INTERRUPT_SHIFT(x) ((uint64_t) x << 32)
-#define TIMER_PRESCALERS(x) ((uint64_t) x << 8)
-#define TIMER_FLAGS(x) ((uint64_t) x)
+#define TIMER_FLAGS(x) ((uint8_t) x)
 
 #define TIMER_PRESCALER_1_OFFSET (3 * 0)
 #define TIMER_PRESCALER_8_OFFSET (3 * 1)
@@ -39,9 +28,9 @@
 #define TIMER_PRESCALER_EXTERNAL_RISING(x) ((uint64_t) x << TIMER_PRESCALER_EXTERNAL_RISING_OFFSET)
 #define TIMER_PRESCALER_EXTERNAL_FALLING(x) ((uint64_t) x << TIMER_PRESCALER_EXTERNAL_FALLING_OFFSET)
 
-#define TIMER_FLAG_PWM_ENABLED ((uint64_t) 1 << 0)
-#define TIMER_FLAG_PWM_DISABLED ((uint64_t) 0 << 0)
-#define TIMER_FLAG_8_BITS ((uint64_t) 0 << 1)
-#define TIMER_FLAG_16_BITS ((uint64_t) 1 << 1)
+#define TIMER_FLAG_PWM_ENABLED ((uint8_t) 1 << 0)
+#define TIMER_FLAG_PWM_DISABLED ((uint8_t) 0 << 0)
+#define TIMER_FLAG_8_BITS ((uint8_t) 0 << 1)
+#define TIMER_FLAG_16_BITS ((uint8_t) 1 << 1)
 
 #endif

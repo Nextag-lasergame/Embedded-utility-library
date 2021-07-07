@@ -78,6 +78,11 @@ int main()
 #include "avr/io.h"
 #include "avr/interrupt.h"
 
+void callback()
+{
+    dio_setOutput(DIO_PB3, !dio_getInput(DIO_PB3));
+}
+
 int main()
 {
 //    CLKPR = (1 << CLKPS3);
@@ -85,9 +90,10 @@ int main()
     dio_setDirection(DIO_PB3, true);
 //    dio_setOutput(DIO_PB3, true);
 
-   Timer_t *timer = timer_create(TIMER_0);
+   Timer_t *timer = timer0;
    timer_initCtc(timer, PRESCALER_1);
    timer_setCompA(timer, 250);
+   timer_setCallback(timer, ON_MATCH_COMP_A, callback);
 
     // cli();
     // // Set mode to CTC
@@ -105,11 +111,6 @@ int main()
     {
 
     }
-}
-
-ISR(TIMER0_COMPA_vect)
-{
-    dio_setOutput(DIO_PB3, !dio_getInput(DIO_PB3));
 }
 
 #endif
