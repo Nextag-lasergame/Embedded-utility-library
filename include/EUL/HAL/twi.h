@@ -26,14 +26,14 @@ extern "C" {
 
 //TODO: Add errorcallback
 
-extern void twi_begin();
-extern void twi_setAddress(uint8_t address);
-extern void twi_sendTo(uint8_t address, uint8_t *data, uint8_t amount);
-extern void twi_requestFrom(uint8_t address, uint8_t amount);
+void twi_begin();
+void twi_setAddress(uint8_t address);
+void twi_sendTo(uint8_t address, uint8_t *data, uint8_t amount);
+void twi_requestFrom(uint8_t address, uint8_t amount);
 
-extern void twi_onReceive(void (*)(uint8_t *, uint8_t));
-extern void twi_onRequest(void (*)(void));
-extern void twi_requestReply(uint8_t *data, uint8_t amount);
+void twi_onReceive(void (*)(uint8_t *, uint8_t));
+void twi_onRequest(void (*)(void));
+void twi_requestReply(uint8_t *data, uint8_t amount);
 
 #ifdef __cplusplus
 }

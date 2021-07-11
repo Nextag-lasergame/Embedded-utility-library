@@ -20,6 +20,8 @@
 #ifndef EMBEDDED_UTILITY_LIBRARY_IR_REMOTE_H
 #define EMBEDDED_UTILITY_LIBRARY_IR_REMOTE_H
 
+#if 0
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -36,6 +38,8 @@ uint32_t ir_read();
 
 #ifdef __cplusplus
 }
+#endif
+
 #endif
 
 #endif //EMBEDDED_UTILITY_LIBRARY_IR_REMOTE_H

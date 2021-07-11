@@ -1,3 +1,4 @@
+
 /*
  * Copyright (c) 2020-2021 Tim Herreijgers
  *
@@ -15,35 +16,22 @@
  * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-#ifndef NATIVE_BUILD
+#ifndef EMBEDDED_UTILITY_LIBRARY_ATTINY45_H
+#define EMBEDDED_UTILITY_LIBRARY_ATTINY45_H
 
-#include "EUL/util/defaultloggers.h"
-#include "EUL/HAL/usart.h"
+#include "../platform_macros.h"
+#include "EUL/HAL/timer.h"
 
-#define F_CPU 16000000L
-#include <util/delay.h>
-#include <avr/io.h>
+#define DIO_PB0 {PIN_SHIFT(0x36) | DDR_SHIFT(0x37) | PORT_SHIFT(0x38) | BIT_SHIFT(0x00) }
+#define DIO_PB1 {PIN_SHIFT(0x36) | DDR_SHIFT(0x37) | PORT_SHIFT(0x38) | BIT_SHIFT(0x01) }
+#define DIO_PB2 {PIN_SHIFT(0x36) | DDR_SHIFT(0x37) | PORT_SHIFT(0x38) | BIT_SHIFT(0x02) }
+#define DIO_PB3 {PIN_SHIFT(0x36) | DDR_SHIFT(0x37) | PORT_SHIFT(0x38) | BIT_SHIFT(0x03) }
+#define DIO_PB4 {PIN_SHIFT(0x36) | DDR_SHIFT(0x37) | PORT_SHIFT(0x38) | BIT_SHIFT(0x04) }
+#define DIO_PB5 {PIN_SHIFT(0x36) | DDR_SHIFT(0x37) | PORT_SHIFT(0x38) | BIT_SHIFT(0x05) }
 
-void usartLogger9600Init();
-void usartLogger115200Init();
-void usartLoggerLog(const char * msg);
+#define USART_COUNT 0
+#define TIMER_COUNT 1
 
-Logger_t usartLogger9600 = { usartLogger9600Init, usartLoggerLog };
-Logger_t usartLogger115200 = { usartLogger115200Init, usartLoggerLog };
+extern Timer_t *timer0;
 
-void usartLogger9600Init()
-{
-    usart_begin(usart0, 9600);
-}
-
-void usartLogger115200Init()
-{
-    usart_begin(usart0, 115200);
-}
-
-void usartLoggerLog(const char * msg)
-{
-    while(!usart_println(usart0, msg));
-}
-
-#endif
+#endif //EMBEDDED_UTILITY_LIBRARY_ATTINY45_H

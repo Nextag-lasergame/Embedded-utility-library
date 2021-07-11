@@ -41,18 +41,15 @@ typedef struct
 } Pin_t;
 
 #ifdef __AVR_ATmega328P__
-
 #include "digital_io/pins_atmega328p.h"
-
 #endif
-
 #ifdef __AVR_ATmega2560__
 #include "digital_io/pins_atmega2560.h"
 #endif
 
-extern void dio_setDirection(Pin_t pin, bool output);
-extern void dio_setOutput(Pin_t pin, bool high);
-extern bool dio_getInput(Pin_t pin);
+void dio_setDirection(Pin_t pin, bool output);
+void dio_setOutput(Pin_t pin, bool high);
+bool dio_getInput(Pin_t pin);
 
 #ifdef __cplusplus
 }
