@@ -5,8 +5,6 @@
 #include <avr/interrupt.h>
 #include <stdlib.h>
 
-#include "internal/timer_internal.h"
-
 bool timer_initCtc(Timer_t *timer, enum TimerPrescaler prescaler)
 {
     // TODO: Fix this prescalerValue thingy

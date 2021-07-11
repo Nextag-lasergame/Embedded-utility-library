@@ -47,13 +47,9 @@ typedef struct
 #include "digital_io/pins_atmega2560.h"
 #endif
 
-#ifdef __AVR_ATtiny45__
-#include "digital_io/pins_attiny45.h"
-#endif
-
-extern void dio_setDirection(Pin_t pin, bool output);
-extern void dio_setOutput(Pin_t pin, bool high);
-extern bool dio_getInput(Pin_t pin);
+void dio_setDirection(Pin_t pin, bool output);
+void dio_setOutput(Pin_t pin, bool high);
+bool dio_getInput(Pin_t pin);
 
 #ifdef __cplusplus
 }

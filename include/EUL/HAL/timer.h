@@ -4,7 +4,18 @@
 #include "stdbool.h"
 #include "inttypes.h"
 
-typedef struct Timer Timer_t;
+typedef struct
+{
+    uint8_t flags;
+    uint32_t prescalers;
+    uint8_t registerInterruptMask;
+    uint8_t registerOutputA;
+    uint8_t registerOutputB;
+    uint8_t registerControlB;
+    uint8_t registerControlA;
+
+    void (* callbacks[3])();
+} Timer_t;
 
 enum TimerPrescaler
 {
