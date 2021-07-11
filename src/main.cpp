@@ -29,9 +29,7 @@ int main()
     dio_setDirection(DIO_PB3, true);
 
     Timer_t *timer = timer0;
-    bool result = timer_initCtc(timer, PRESCALER_64);
-    // if(!result)
-    //     dio_setOutput(DIO_PB3, true);
+    timer_initCtc(timer, PRESCALER_64);
     timer_setCompA(timer, 250);
     timer_setCallback(timer, ON_MATCH_COMP_A, callback);
 

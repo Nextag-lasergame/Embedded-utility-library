@@ -49,6 +49,7 @@ typedef struct
 
 void dio_setDirection(Pin_t pin, bool output);
 void dio_setOutput(Pin_t pin, bool high);
+void dio_toggle(Pin_t pin);
 bool dio_getInput(Pin_t pin);
 
 #ifdef __cplusplus

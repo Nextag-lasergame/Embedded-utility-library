@@ -35,6 +35,11 @@ void dio_setOutput(Pin_t pin, bool output)
         _SFR_MEM8(pin.portRegister) &= ~_BV(pin.bit);
 }
 
+void dio_toggle(Pin_t pin)
+{
+_SFR_MEM8(pin.portRegister) ^= _BV(pin.bit);
+}
+
 bool dio_getInput(Pin_t pin)
 {
     return (_SFR_MEM8(pin.pinRegister) & _BV(pin.bit));
