@@ -7,15 +7,15 @@
 
 bool timer_initCtc(Timer_t *timer, enum TimerPrescaler prescaler)
 {
-    // TODO: Fix this prescalerValue thingy
-    // uint8_t prescalerValue = ((timer->flagsAndPrescalers & (0b111 << (prescaler * 3 + 2))) >> (prescaler * 3 + 2));
-    // if (prescalerValue == 0)
-    //     return false;
+    uint8_t offset = prescaler * 3;
+    uint8_t prescalerValue = ((timer->prescalers & ((uint32_t) 0b111 << offset)) >> offset); 
+    if (prescalerValue == 0)
+        return false;
 
     cli();
     _MMIO_BYTE(timer->registerInterruptMask) = _BV(OCIE0A) | _BV(OCIE0B) | _BV(TOIE0);
     _MMIO_BYTE(timer->registerControlA) = (1 << WGM01); // Set mode to CTC
-    _MMIO_BYTE(timer->registerControlB) = _BV(CS02) | _BV(CS00); //(prescaler & 0b001 << CS00) | (prescaler & 0b010 << CS01) | (prescaler & 0b100 << CS02);
+    _MMIO_BYTE(timer->registerControlB) = (prescalerValue & 0b001 << CS00) | (((prescalerValue & 0b010) >> 1) << CS01) | (((prescalerValue & 0b100) >> 2) << CS02); //
     sei();
 
     return true;
