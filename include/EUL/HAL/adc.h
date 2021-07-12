@@ -19,14 +19,7 @@
 
 #include <inttypes.h>
 
-typedef enum
-{
-
-} AdcReference_t;
-
-typedef enum
-{
-} AdcChannel_t;
+#include "EUL/platform/platform.h"
 
 typedef enum
 {

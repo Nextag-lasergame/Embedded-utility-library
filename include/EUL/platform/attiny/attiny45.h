@@ -22,6 +22,14 @@
 #include "../platform_macros.h"
 #include "EUL/HAL/timer.h"
 
+#pragma region Peripheral counts
+
+#define USART_COUNT 0
+#define TIMER_COUNT 1
+
+#pragma endregion
+#pragma region DIO
+
 #define DIO_PB0 {PIN_SHIFT(0x36) | DDR_SHIFT(0x37) | PORT_SHIFT(0x38) | BIT_SHIFT(0x00) }
 #define DIO_PB1 {PIN_SHIFT(0x36) | DDR_SHIFT(0x37) | PORT_SHIFT(0x38) | BIT_SHIFT(0x01) }
 #define DIO_PB2 {PIN_SHIFT(0x36) | DDR_SHIFT(0x37) | PORT_SHIFT(0x38) | BIT_SHIFT(0x02) }
@@ -29,8 +37,39 @@
 #define DIO_PB4 {PIN_SHIFT(0x36) | DDR_SHIFT(0x37) | PORT_SHIFT(0x38) | BIT_SHIFT(0x04) }
 #define DIO_PB5 {PIN_SHIFT(0x36) | DDR_SHIFT(0x37) | PORT_SHIFT(0x38) | BIT_SHIFT(0x05) }
 
-#define USART_COUNT 0
-#define TIMER_COUNT 1
+#pragma endregion
+
+#pragma region ADC
+
+// Only use the first 2 bits, for now
+typedef enum
+{
+    VCC = 0,
+    AREF = 1,
+    INTERNAL_1_1V = 2
+} AdcReference_t;
+
+//Only use MUX[4:0]
+typedef enum
+{
+    ADC0,
+    ADC1,
+    ADC2,
+    ADC3,
+    ADC2_ADC2_1x,
+    ADC2_ADC2_20x,
+    ADC2_ADC3_1x,
+    ADC2_ADC3_20x,
+    ADC0_ADC0_1x,
+    ADC0_ADC0_20x,
+    ADC0_ADC1_1x,
+    ADC0_ADC1_20x,
+    Vbg,
+    GND,
+    ADC4 = 0b1111
+} AdcChannel_t;
+
+#pragma endregion
 
 extern Timer_t *timer0;
 
