@@ -51,6 +51,7 @@ void adc_setCallback(AdcCallback_t callback);
 void adc_setAutoTriggerSource(AdcFreeRunningSource_t source);
 void adc_startSingleConversion(AdcChannel_t channel);
 void adc_startAutoTriggerConversion(AdcChannel_t channel);
+void adc_stopAutoTriggerConversion();
 uint16_t adc_startConversionBlocking(AdcChannel_t channel);
 
 #endif
