@@ -43,8 +43,6 @@ typedef enum
 
 typedef void (*AdcCallback_t)(AdcChannel_t, uint16_t);
 
-void adc_init();
-void adc_deinit();
 void adc_setReference(AdcReference_t source);
 void adc_setPrescaler(AdcPrescaler_t prescaler);
 void adc_setCallback(AdcCallback_t callback);
