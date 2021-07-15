@@ -19,6 +19,10 @@
 #ifndef EMBEDDED_UTILITY_LIBRARY_ATTINY45_H
 #define EMBEDDED_UTILITY_LIBRARY_ATTINY45_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "../platform_macros.h"
 #include "EUL/HAL/timer.h"
 
@@ -72,5 +76,9 @@ typedef enum
 #pragma endregion
 
 extern Timer_t *timer0;
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif //EMBEDDED_UTILITY_LIBRARY_ATTINY45_H

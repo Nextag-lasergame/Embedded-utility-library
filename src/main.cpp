@@ -18,10 +18,16 @@
 #ifndef UNIT_TEST
 
 #include "EUL/EUL.h"
+#include "EUL/HAL/adc.h"
 
 void callback()
 {
     dio_setOutput(DIO_PB3, !dio_getInput(DIO_PB3));
+}
+
+void adcCallback(uint16_t value)
+{
+    timer_setCompA(timer0, value * 255 / 1024);
 }
 
 int main()
@@ -29,13 +35,23 @@ int main()
     dio_setDirection(DIO_PB3, true);
 
     Timer_t *timer = timer0;
-    timer_initCtc(timer, PRESCALER_64);
-    timer_setCompA(timer, 250);
+    timer_initCtc(timer, PRESCALER_1024);
+    timer_setCompA(timer, 1);
     timer_setCallback(timer, ON_MATCH_COMP_A, callback);
+    
+    adc_enable();
+    adc_setPrescaler(ADC_PRESCALER_2);
+    adc_setReference(VCC);
+    adc_setCallback(adcCallback);
+    adc_startAutoTriggerConversion(ADC1);
 
     for(;;)
     {
-
+        // uint32_t val = adc_startConversionBlocking(ADC1);
+        // uint8_t timer_interval = val * 255 / 1024;
+        // timer_setCompA(timer, timer_interval);
+        // counter++;
+        // timer_setCompA(timer, (uint8_t) (counter % 256));
     }
 }
 

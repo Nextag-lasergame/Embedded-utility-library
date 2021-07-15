@@ -17,19 +17,23 @@
 #ifndef EMBEDDED_UTILITY_LIBRARY_ADC_H
 #define EMBEDDED_UTILITY_LIBRARY_ADC_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <inttypes.h>
 
 #include "EUL/platform/platform.h"
 
 typedef enum
 {
-    PRESCALER_2 = 1,
-    PRESCALER_4 = 2,
-    PRESCALER_8 = 3,
-    PRESCALER_16 = 4,
-    PRESCALER_32 = 5,
-    PRESCALER_64 = 6,
-    PRESCALER_128 = 7
+    ADC_PRESCALER_2 = 1,
+    ADC_PRESCALER_4 = 2,
+    ADC_PRESCALER_8 = 3,
+    ADC_PRESCALER_16 = 4,
+    ADC_PRESCALER_32 = 5,
+    ADC_PRESCALER_64 = 6,
+    ADC_PRESCALER_128 = 7
 } AdcPrescaler_t;
 
 typedef enum
@@ -41,8 +45,10 @@ typedef enum
     TIMER_0_OVERFLOW = 4
 } AdcFreeRunningSource_t;
 
-typedef void (*AdcCallback_t)(AdcChannel_t, uint16_t);
+typedef void (*AdcCallback_t)(uint16_t);
 
+void adc_enable();
+void adc_disable();
 void adc_setReference(AdcReference_t source);
 void adc_setPrescaler(AdcPrescaler_t prescaler);
 void adc_setCallback(AdcCallback_t callback);
@@ -51,5 +57,9 @@ void adc_startSingleConversion(AdcChannel_t channel);
 void adc_startAutoTriggerConversion(AdcChannel_t channel);
 void adc_stopAutoTriggerConversion();
 uint16_t adc_startConversionBlocking(AdcChannel_t channel);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif
